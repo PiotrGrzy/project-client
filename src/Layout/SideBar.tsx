@@ -1,12 +1,12 @@
-import { styled } from '@mui/material/styles';
-import MuiDrawer from '@mui/material/Drawer';
-import Divider from '@mui/material/Divider';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import Divider from '@mui/material/Divider';
+import MuiDrawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
-import { useUser } from 'context/userContext';
+import { styled } from '@mui/material/styles';
+import Toolbar from '@mui/material/Toolbar';
 import { mainListItems } from 'components/Dashboard/ListItems';
+import { useUser } from 'context/userContext';
 
 export const sideBarWidth = 240;
 

@@ -1,6 +1,6 @@
-import { CreateUserInput } from 'models/signup.schema';
-import { SignInUserInput } from 'models/signIn.schema';
 import http from 'http-common';
+import { SignInUserInput } from 'models/signIn.schema';
+import { CreateUserInput } from 'models/signup.schema';
 import { VerifyUserInput } from 'models/verify.schema';
 
 export const createUser = async (payload: CreateUserInput) => http.post('users', JSON.stringify(payload));

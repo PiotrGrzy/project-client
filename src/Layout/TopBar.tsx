@@ -1,14 +1,15 @@
-import { useState } from 'react';
-import { styled } from '@mui/material/styles';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import MenuIcon from '@mui/icons-material/Menu';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import Typography from '@mui/material/Typography';
-import Toolbar from '@mui/material/Toolbar';
-import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import { useUser, useSetUser, exampleUser } from 'context/userContext';
+import MenuItem from '@mui/material/MenuItem';
+import { styled } from '@mui/material/styles';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import { exampleUser, useSetUser, useUser } from 'context/userContext';
+import { useState } from 'react';
+
 import { sideBarWidth } from './SideBar';
 
 interface AppBarProps extends MuiAppBarProps {
