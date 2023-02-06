@@ -1,0 +1,44 @@
+import React, { createContext, useContext, useState } from 'react';
+
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+};
+
+export interface IUserContext {
+  user: User | null;
+  setUser?: (user: User | null) => void;
+}
+
+export const exampleUser = {
+  id: '124asaswdewcs',
+  name: 'Joe Doe',
+  email: 'joe@example.com',
+};
+
+const defaultContext = {
+  user: null,
+};
+
+const UserContext = createContext<IUserContext>(defaultContext);
+
+const UserContextProvider = ({ children }: { children: React.ReactNode }) => {
+  const [user, setUser] = useState<User | null>(exampleUser);
+
+  return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>;
+};
+
+export const useUser = () => {
+  const { user } = useContext(UserContext);
+
+  return user;
+};
+
+export const useSetUser = () => {
+  const { setUser } = useContext(UserContext);
+
+  return setUser;
+};
+
+export default UserContextProvider;

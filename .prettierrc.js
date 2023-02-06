@@ -2,7 +2,7 @@ module.exports = {
   semi: true,
   trailingComma: 'all',
   singleQuote: true,
-  printWidth: 90,
+  printWidth: 120,
   tabWidth: 2,
   endOfLine: 'auto',
 };
@@ -24,5 +24,5 @@ module.exports = {
 //   "trailingComma": "es5",
 //   "useTabs": false,
 //   "vueIndentScriptAndStyle": false,
-//   "printWidth": 100
+//   "printWidth": 120
 // }
