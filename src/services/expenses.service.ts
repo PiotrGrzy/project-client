@@ -1,4 +1,4 @@
-import http from 'http-common';
-import { ExpenseUserInput } from 'models/expense.schema';
+import { ExpenseUserInput } from '@/models/expense.schema';
+import axios from '@/services/axios.instance';
 
-export const addExpense = async (payload: ExpenseUserInput) => http.post('expenses', JSON.stringify(payload));
+export const addExpense = async (payload: ExpenseUserInput) => axios.post('expenses', JSON.stringify(payload));

@@ -1,20 +1,23 @@
-import div from '@mui/material/div';
 import { useState } from 'react';
 
+import Footer from './Footer';
+import Header from './Header';
 import SideBar from './SideBar';
-import TopBar from './TopBar';
 
 const Layout = ({ children }: { children?: React.ReactNode }) => {
   const [open, setOpen] = useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };
+  const loggedIn = true;
   return (
-    <div sx={{ display: 'flex' }}>
-      <TopBar open={open} toggleDrawer={toggleDrawer} />
-      <SideBar open={open} toggleDrawer={toggleDrawer} />
-
-      <div sx={{ mt: '64px', flexGrow: 1 }}>{children}</div>
+    <div className="min-h-screen flex flex-col bg-gradient-to-r from-sky-700 to-sky-900 text-sky-50">
+      <Header />
+      <div className="flex-1 flex flex-col sm:flex-row max-w-screen-2xl mx-auto w-full ">
+        <main className="flex-1 p-2">{children}</main>
+        {loggedIn && <SideBar />}
+      </div>
+      <Footer />
     </div>
   );
 };

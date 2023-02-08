@@ -1,10 +1,11 @@
+import Layout from '@/Layout';
 import Routing from '@/routes/Routing';
 
 function App() {
   return (
-    <div>
+    <Layout>
       <Routing />
-    </div>
+    </Layout>
   );
 }
 

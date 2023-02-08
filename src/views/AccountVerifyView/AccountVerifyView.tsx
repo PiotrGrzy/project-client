@@ -48,7 +48,7 @@ const AccountVerifyView = () => {
       <p>Please verify your account</p>
       <button onClick={sendVerificationCode}>Verify Account</button>
 
-      {error && <p color={'red'}>Verification link is invalid</p>}
+      {error && <p>Verification link is invalid</p>}
     </div>
   );
 };
