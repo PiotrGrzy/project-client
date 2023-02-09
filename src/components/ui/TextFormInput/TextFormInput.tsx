@@ -4,10 +4,10 @@ import { Controller, useFormContext } from 'react-hook-form';
 type FormInputProps = {
   name: string;
   label: string;
-  placeholder: string;
+  placeholder?: string;
 };
 
-const TextInput = ({ name, label, placeholder, ...otherProps }: FormInputProps) => {
+const TextInput = ({ name, label, placeholder = '', ...otherProps }: FormInputProps) => {
   const {
     control,
     formState: { errors },

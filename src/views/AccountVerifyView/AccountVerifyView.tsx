@@ -19,16 +19,14 @@ const AccountVerifyView = () => {
   }, [query]);
 
   const sendVerificationCode = async () => {
-    if (id && verificationCode) {
-      try {
-        await verifyUser({ id, verificationCode });
-        setVerifySuccess(true);
-      } catch (e: any) {
-        setError(e.message);
-      }
-    }
     if (!id || !verificationCode) {
-      setError('Invalid verification link');
+      return setError('Invalid verification link');
+    }
+    try {
+      await verifyUser({ id, verificationCode });
+      setVerifySuccess(true);
+    } catch (e: any) {
+      setError(e.message);
     }
   };
 
@@ -37,7 +35,10 @@ const AccountVerifyView = () => {
       <div>
         <p>Verification successfull!</p>
         <p>
-          Your can now <Link to={'/signin'}>log in to aacount</Link>
+          Your can now{' '}
+          <Link className="btn btn-primary" to={'/signin'}>
+            log in to account
+          </Link>
         </p>
       </div>
     );
@@ -46,7 +47,9 @@ const AccountVerifyView = () => {
   return (
     <div>
       <p>Please verify your account</p>
-      <button onClick={sendVerificationCode}>Verify Account</button>
+      <button className="btn btn-primary" onClick={sendVerificationCode}>
+        Verify Account
+      </button>
 
       {error && <p>Verification link is invalid</p>}
     </div>

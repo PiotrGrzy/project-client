@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import * as z from 'zod';
 
@@ -16,6 +17,7 @@ const defaultValues = {
 };
 
 function SignInView() {
+  const navigate = useNavigate();
   const [loginError, setLoginError] = useState('');
   const formMethods = useForm<SignInUserInput>({
     resolver: zodResolver(signInUserSchema),
@@ -28,8 +30,10 @@ function SignInView() {
     console.log(data);
     try {
       await signInUser(data);
+      navigate(Paths.DASHBOARD);
     } catch (e: any) {
-      setLoginError(e.message);
+      const errMessage = e.response?.data || e.message || 'Network error';
+      setLoginError(errMessage);
     }
   };
 
@@ -44,7 +48,7 @@ function SignInView() {
               Sign In
             </button>
           </div>
-          <p>{loginError}</p>
+          <p className="text-error">{loginError}</p>
           <p className="text-center">
             <span className="mr-1"> Need new account?</span> <Link to={Paths.SIGN_UP}>Sign up</Link>
           </p>
@@ -55,4 +59,3 @@ function SignInView() {
 }
 
 export default SignInView;
-export {};

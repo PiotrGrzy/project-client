@@ -6,7 +6,7 @@ export const sideBarWidth = 240;
 
 const SideBar = () => {
   return (
-    <nav className="order-first sm:w-48 p-2 bg-sky-900/75">
+    <nav className="order-first sm:w-48 p-2 border-r border-slate-700/50 ">
       <ul>
         <li>
           <NavLink to={Paths.VERIFY}>Verify</NavLink>
