@@ -1,22 +1,10 @@
 import { useEffect, useState } from 'react';
 
-import { getSession } from '@/services/users.service';
+import { getSession, useUserQuery } from '@/services/users.service';
 
 const HomeView = () => {
-  // const [sessionErr, setSessionError] = useState('');
-  // useEffect(() => {
-  //   const checkSession = async () => {
-  //     try {
-  //       const res = await getSession();
-  //       console.log(res);
-  //     } catch (e: any) {
-  //       console.log(e);
+  const user = useUserQuery();
 
-  //       setSessionError(e.message);
-  //     }
-  //   };
-  //   checkSession();
-  // }, []);
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">
