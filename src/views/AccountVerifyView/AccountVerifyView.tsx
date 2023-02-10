@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 import useUrlQuery from '@/hooks/useUrlQuery';
-import { verifyUser } from '@/services/users.service';
+import { Paths } from '@/routes/paths';
+import { verifyUserAccount } from '@/services/users.service';
 
 const AccountVerifyView = () => {
   const query = useUrlQuery();
@@ -23,7 +24,7 @@ const AccountVerifyView = () => {
       return setError('Invalid verification link');
     }
     try {
-      await verifyUser({ id, verificationCode });
+      await verifyUserAccount({ id, verificationCode });
       setVerifySuccess(true);
     } catch (e: any) {
       setError(e.message);

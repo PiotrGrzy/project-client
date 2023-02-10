@@ -1,14 +1,14 @@
 import React, { createContext, useContext, useState } from 'react';
 
-export type User = {
+export type UserType = {
   id: string;
   name: string;
   email: string;
 };
 
 export interface IUserContext {
-  user: User | null;
-  setUser?: (user: User | null) => void;
+  user: UserType | null;
+  setUser?: (user: UserType | null) => void;
 }
 
 export const exampleUser = {
@@ -24,7 +24,7 @@ const defaultContext = {
 const UserContext = createContext<IUserContext>(defaultContext);
 
 const UserContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<User | null>(exampleUser);
+  const [user, setUser] = useState<UserType | null>(exampleUser);
 
   return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>;
 };

@@ -1,24 +1,28 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import * as z from 'zod';
 
 import Form from '@/components/ui/Form';
 import TextFormInput from '@/components/ui/TextFormInput';
 import { SignInUserInput, signInUserSchema } from '@/models/signIn.schema';
 import { Paths } from '@/routes/paths';
-import { signInUser } from '@/services/users.service';
+import { signInUser, useUserQuery } from '@/services/users.service';
 
 const defaultValues = {
   email: '',
   password: '',
 };
-
 function SignInView() {
-  const navigate = useNavigate();
-  const [loginError, setLoginError] = useState('');
+  // const user = useUserQuery();
+  const queryClient = useQueryClient();
+  const signin = useMutation({
+    mutationFn: (data: SignInUserInput) => signInUser(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+    },
+  });
   const formMethods = useForm<SignInUserInput>({
     resolver: zodResolver(signInUserSchema),
     defaultValues,
@@ -27,15 +31,12 @@ function SignInView() {
   });
 
   const onSubmit: SubmitHandler<SignInUserInput> = async (data) => {
-    console.log(data);
-    try {
-      await signInUser(data);
-      navigate(Paths.DASHBOARD);
-    } catch (e: any) {
-      const errMessage = e.response?.data || e.message || 'Network error';
-      setLoginError(errMessage);
-    }
+    signin.mutate(data);
   };
+
+  // if (user.data) {
+  //   return <Navigate to={Paths.DASHBOARD} replace />;
+  // }
 
   return (
     <div className="flex justify-center items-center h-full">
@@ -48,7 +49,7 @@ function SignInView() {
               Sign In
             </button>
           </div>
-          <p className="text-error">{loginError}</p>
+          <p className="text-error">{signin.isError ? 'Errorrrr' : ''}</p>
           <p className="text-center">
             <span className="mr-1"> Need new account?</span> <Link to={Paths.SIGN_UP}>Sign up</Link>
           </p>

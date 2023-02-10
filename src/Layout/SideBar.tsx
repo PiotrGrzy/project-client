@@ -10,6 +10,7 @@ const SideBar = () => {
       <ul>
         <li>
           <NavLink to={Paths.VERIFY}>Verify</NavLink>
+          <NavLink to={Paths.DASHBOARD}>Dashboard</NavLink>
         </li>
       </ul>
     </nav>

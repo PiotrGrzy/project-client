@@ -15,9 +15,7 @@ ReactDOM.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <UserContextProvider>
-          <App />
-        </UserContextProvider>
+        <App />
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={true} />
     </QueryClientProvider>

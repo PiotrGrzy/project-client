@@ -1,9 +1,20 @@
 import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
-import { getSession, useUserQuery } from '@/services/users.service';
+import { Paths } from '@/routes/paths';
+import { useUserQuery } from '@/services/users.service';
 
 const HomeView = () => {
-  const user = useUserQuery();
+  // const navigate = useNavigate();
+  // const user = useUserQuery();
+
+  // if (user.isLoading) {
+  //   return <div>Loading</div>;
+  // }
+
+  // if (!user.data) {
+  //   navigate(Paths.SIGN_IN);
+  // }
 
   return (
     <div className="hero min-h-screen bg-base-200">
@@ -15,29 +26,13 @@ const HomeView = () => {
             deleniti eaque aut repudiandae et a id nisi.
           </p>
         </div>
-        <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-          <div className="card-body">
-            <div className="form-control">
-              <label className="label" htmlFor="email">
-                <span className="label-text">Email</span>
-              </label>
-              <input type="text" placeholder="email" className="input input-bordered" />
-            </div>
-            <div className="form-control">
-              <label className="label" htmlFor="password">
-                <span className="label-text">Password</span>
-              </label>
-              <input type="text" placeholder="password" className="input input-bordered" />
-              <p className="label">
-                <a href="#reset" className="label-text-alt link link-hover">
-                  Forgot password?
-                </a>
-              </p>
-            </div>
-            <div className="form-control mt-6">
-              <button className="btn btn-primary">Login</button>
-            </div>
-          </div>
+        <div>
+          <Link className="btn btn-primary m-2" to={Paths.SIGN_IN}>
+            Sign In
+          </Link>
+          <Link className="btn btn-primary m-2" to={Paths.SIGN_UP}>
+            Sign Up
+          </Link>
         </div>
       </div>
     </div>
