@@ -1,10 +1,5 @@
-import z, { number, object, string, TypeOf } from 'zod';
+import z, { coerce, number, object, string, TypeOf } from 'zod';
 
-export enum Category {
-  FOOD = 'food',
-  ENTERTAINMENT = 'entertainment',
-  MEDIA = 'media',
-}
 const zodCostCategoryEnum = z.enum([
   'food',
   'entertainment',
@@ -30,7 +25,7 @@ export const expenseSchema = object({
     })
     .max(64, 'Title maximum length is 64 chars'),
   description: string().max(255, 'Description maximum length is 255 chars'),
-  cost: number().nonnegative('Cost must be larger than 0'),
+  cost: coerce.number().nonnegative('Cost must be larger than 0'),
   type: zodExpenseTypeEnum,
   category: zodCostCategoryEnum,
 });

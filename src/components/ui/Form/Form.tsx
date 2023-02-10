@@ -7,8 +7,8 @@ interface FormProps {
 
 const Form = ({ children, onSubmit }: FormProps) => {
   return (
-    <form className="card flex-shrink-0 w-full max-w-lg shadow-2xl bg-base-100 " onSubmit={onSubmit}>
-      <div className="card-body">{children}</div>
+    <form className="card w-full max-w-lg shadow-2xl bg-base-100" onSubmit={onSubmit}>
+      <div className="card-body gap-0">{children}</div>
     </form>
   );
 };

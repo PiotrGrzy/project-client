@@ -14,7 +14,7 @@ const Layout = ({ children, isLoggedIn }: { children?: React.ReactNode; isLogged
   // };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-r bg-base-200">
+    <div className="min-h-screen flex flex-col bg-gradient-to-r bg-base-200 ">
       {isLoggedIn && <Header />}
       <div className="flex-1 flex flex-col sm:flex-row max-w-screen-2xl mx-auto w-full ">
         <main className="flex-1 p-2">{children}</main>

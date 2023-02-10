@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { Navigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -22,6 +23,7 @@ function SignInView() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user'] });
     },
+    onError: (err: AxiosError) => err,
   });
   const formMethods = useForm<SignInUserInput>({
     resolver: zodResolver(signInUserSchema),
@@ -44,12 +46,12 @@ function SignInView() {
         <Form onSubmit={formMethods.handleSubmit(onSubmit)}>
           <TextFormInput name="email" label="Email" placeholder="email" />
           <TextFormInput name="password" label="Password" placeholder="password" />
-          <div className="form-control mt-6">
+          <div className="form-control mt-4">
             <button className="btn btn-primary" type="submit">
               Sign In
             </button>
           </div>
-          <p className="text-error">{signin.isError ? 'Errorrrr' : ''}</p>
+          <p className="text-error">{signin.isError ? signin.error?.response?.data : ''}</p>
           <p className="text-center">
             <span className="mr-1"> Need new account?</span> <Link to={Paths.SIGN_UP}>Sign up</Link>
           </p>
