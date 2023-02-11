@@ -21,6 +21,11 @@ export const getExpenses = async (): Promise<Expense[]> => {
   const response = await axios.get('expenses');
   return response.data;
 };
+export const updateExpense = async (payload: Partial<ExpenseUserInput>, id: string) => {
+  console.log('id', id);
+
+  return axios.patch(`expenses/${id}`, JSON.stringify(payload));
+};
 
 export const useExpenseQuery = () => {
   return useQuery({ queryKey: ['expenses'], queryFn: getExpenses, initialData: [] });

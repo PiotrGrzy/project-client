@@ -11,7 +11,7 @@ const zodCostCategoryEnum = z.enum([
   'insurence',
   'other',
   'loan',
-  '',
+  'clothes',
 ]);
 const zodExpenseTypeEnum = z.enum(['once', 'daily', 'weekly', 'monthly', 'quarterly', 'yearly']);
 

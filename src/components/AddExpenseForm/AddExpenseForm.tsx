@@ -1,66 +1,67 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
-import * as z from 'zod';
 
 import Form from '@/components/ui/Form';
 import Select from '@/components/ui/Select';
 import TextFormInput from '@/components/ui/TextFormInput';
-import { CategoryType, expenseSchema, ExpenseType, ExpenseUserInput } from '@/models/expense.schema';
-import { Paths } from '@/routes/paths';
-import { addExpense } from '@/services/expenses.service';
+import { expenseSchema, ExpenseUserInput } from '@/models/expense.schema';
+import { addExpense, Expense, updateExpense } from '@/services/expenses.service';
 
-const defaultValues: ExpenseUserInput = {
-  title: '',
-  description: '',
-  category: '',
-  type: 'once',
-  cost: 0,
-};
+import { expenseCategoryOptions, expenseTypeOptions, getDirtyValues, initialValues } from './expenseForm.utils';
 
-const expenseTypeOptions: { value: ExpenseType; label: string }[] = [
-  { value: 'once', label: 'Once' },
-  { value: 'daily', label: 'Daily' },
-];
+interface ExpenseFormProps {
+  closeModal: () => void;
+  selectedExpense: Expense | null;
+}
 
-const expenseCategoryOptions: { value: CategoryType; label: string }[] = [
-  { value: 'food', label: 'Food' },
-  { value: 'car', label: 'Car' },
-];
+const AddExpenseForm = ({ closeModal, selectedExpense }: ExpenseFormProps) => {
+  const queryClient = useQueryClient();
+  const expense = useMutation({
+    mutationFn: selectedExpense
+      ? (data: Partial<ExpenseUserInput>) => updateExpense(data, selectedExpense._id)
+      : (data: ExpenseUserInput) => addExpense(data),
+    onSuccess: () => {
+      closeModal();
+      queryClient.invalidateQueries({ queryKey: ['expenses'] });
+    },
+    onError: (err: AxiosError) => err,
+  });
 
-const AddExpenseForm = () => {
-  const [addExpenseError, setAddExpenseError] = useState('');
   const formMethods = useForm<ExpenseUserInput>({
     resolver: zodResolver(expenseSchema),
-    defaultValues,
+    defaultValues: selectedExpense || initialValues,
     mode: 'onBlur',
     reValidateMode: 'onChange',
   });
 
   const onSubmit: SubmitHandler<ExpenseUserInput> = async (data) => {
-    console.log('DATA', data);
-    try {
-      await addExpense(data);
-    } catch (e: any) {
-      setAddExpenseError(e.message);
+    if (selectedExpense) {
+      const {
+        formState: { dirtyFields, isDirty },
+      } = formMethods;
+      // TODO check why isDirty is always false
+      const changedData = getDirtyValues(dirtyFields, data) as Partial<ExpenseUserInput>;
+      return expense.mutate(changedData);
     }
+    console.log('ADD NEW EXPENSE REQUEST', data);
+    expense.mutate(data);
   };
 
   return (
     <div>
       <FormProvider {...formMethods}>
         <Form onSubmit={formMethods.handleSubmit(onSubmit)}>
-          <h1>Add new expense</h1>
+          <h1> {selectedExpense ? 'Edit expense' : 'Add new expense'}</h1>
           <TextFormInput name="title" label="Title" />
           <TextFormInput name="description" label="Description" />
           <Select name="category" label="Category" options={expenseCategoryOptions} />
           <Select name="type" label="Type" options={expenseTypeOptions} />
           <TextFormInput name="cost" label="Cost" type="number" />
           <button className="btn btn-primary" type="submit">
-            Add expense
+            {selectedExpense ? 'Save changes' : 'Add expense'}
           </button>
-          <p>{addExpenseError}</p>
         </Form>
       </FormProvider>
     </div>

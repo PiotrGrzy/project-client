@@ -1,29 +1,38 @@
 import { useCallback, useState } from 'react';
 
 import AddExpenseForm from '@/components/AddExpenseForm';
-import ExpenseList from '@/components/ExpenseList';
+import ExpenseTable from '@/components/ExpenseTable';
 import Modal from '@/components/ui/Modal';
-import { useUserQuery } from '@/services/users.service';
+import { Expense } from '@/services/expenses.service';
 
 const DashboardView = () => {
-  const user = useUserQuery();
   const [modalOpen, setModalOpen] = useState(false);
+  const [selectedExpense, setSelectedExpense] = useState<Expense | null>(null);
+
   const closeModal = useCallback(() => {
     setModalOpen(false);
-  }, []);
+    if (selectedExpense) {
+      setSelectedExpense(null);
+    }
+  }, [selectedExpense]);
+
   const openModal = useCallback(() => {
     setModalOpen(true);
   }, []);
+
+  const openEditModal = useCallback((expense: Expense) => {
+    setSelectedExpense(expense);
+    setModalOpen(true);
+  }, []);
+
   return (
     <div>
-      <h1>{user.data?.firstName}</h1>
-      <ExpenseList />
+      <ExpenseTable openEditModal={openEditModal} />
       <button className="btn btn-primary" onClick={openModal}>
-        open modal
+        Add expense
       </button>
-
       <Modal isOpen={modalOpen} handleClose={closeModal}>
-        <AddExpenseForm />
+        <AddExpenseForm closeModal={closeModal} selectedExpense={selectedExpense} />
       </Modal>
     </div>
   );

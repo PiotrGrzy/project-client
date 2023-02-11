@@ -26,14 +26,8 @@ const Select = ({ name, label, options, ...otherProps }: SelectProps) => {
             <label className="label" htmlFor={name}>
               <span className="label-text">{label}</span>
             </label>
-            <select
-              id={name}
-              className="select select-bordered"
-              defaultValue={options[0].value}
-              {...field}
-              {...otherProps}
-            >
-              {options.map(({ value, label }, index) => (
+            <select id={name} className="select select-bordered" {...field} {...otherProps}>
+              {options.map(({ value, label }) => (
                 <option key={value} value={value}>
                   {label}
                 </option>
