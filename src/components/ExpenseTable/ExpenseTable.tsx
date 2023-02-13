@@ -1,27 +1,42 @@
+import { useState } from 'react';
+
 import ExpenseTableItem from '@/components/ExpenseTableItem';
-import { Expense, useExpenseQuery } from '@/services/expenses.service';
+import Pagination from '@/components/Pagination';
+import { Expense, IQueryParams, useExpenseQuery } from '@/services/expenses.service';
 
 const ExpenseList = ({ openEditModal }: { openEditModal: (Expense: Expense) => void }) => {
-  const expenses = useExpenseQuery();
+  const [queryParams, setQueryParams] = useState<IQueryParams>({
+    sortBy: 'createdAt',
+    asc: 0,
+    limit: 5,
+    next: '',
+    previous: '',
+  });
+  const expenses = useExpenseQuery(queryParams);
+  const handleSortChange = (sortBy: string) => {
+    setQueryParams((prev) => ({ ...prev, sortBy }));
+  };
+  const { docs, ...meta } = expenses.data;
   return (
     <div className="overflow-x-auto w-full">
       <table className="table w-full">
         <thead>
           <tr>
-            <th>Title</th>
+            <th onClick={() => handleSortChange('title')}>Title</th>
             <th>Date</th>
-            <th>Category</th>
+            <th onClick={() => handleSortChange('category')}>Category</th>
             <th>Type</th>
             <th>Amount</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          {expenses.data.map((expense) => (
+          {docs.map((expense) => (
             <ExpenseTableItem expense={expense} key={expense._id} openEditModal={openEditModal} />
           ))}
         </tbody>
       </table>
+      <Pagination setQueryParams={setQueryParams} {...meta} />
     </div>
   );
 };

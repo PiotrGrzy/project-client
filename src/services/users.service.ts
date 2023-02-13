@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { SignInUserInput } from '@/models/signIn.schema';
 import { CreateUserInput } from '@/models/signup.schema';
 import { VerifyUserInput } from '@/models/verify.schema';
-import axios from '@/services/axios.instance';
+import client from '@/services/axios.instance';
 
 export enum ROLE {
   USER = 'user',
@@ -22,15 +22,15 @@ export type User = {
   exp: number;
 };
 
-export const createUser = async (payload: CreateUserInput) => axios.post('users', JSON.stringify(payload));
-export const signInUser = async (payload: SignInUserInput) => axios.post('sessions', JSON.stringify(payload));
+export const createUser = async (payload: CreateUserInput) => client.post('users', JSON.stringify(payload));
+export const signInUser = async (payload: SignInUserInput) => client.post('sessions', JSON.stringify(payload));
 export const verifyUserAccount = async (payload: VerifyUserInput) =>
-  axios.get(`users/verify/${payload.id}/${payload.verificationCode}`);
+  client.get(`users/verify/${payload.id}/${payload.verificationCode}`);
 export const getCurrentUser = async (): Promise<User> => {
-  const response = await axios.get('users/me');
+  const response = await client.get('users/me');
   return response.data;
 };
-export const logoutUser = async () => axios.post('sessions/logout');
+export const logoutUser = async () => client.post('sessions/logout');
 
 export const useUserQuery = () => {
   const queryClient = useQueryClient();
