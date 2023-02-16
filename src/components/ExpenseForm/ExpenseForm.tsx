@@ -16,14 +16,13 @@ interface ExpenseFormProps {
   selectedExpense: Expense | null;
 }
 
-const AddExpenseForm = ({ closeModal, selectedExpense }: ExpenseFormProps) => {
+const ExpenseForm = ({ closeModal, selectedExpense }: ExpenseFormProps) => {
   const queryClient = useQueryClient();
   const expense = useMutation({
     mutationFn: selectedExpense
       ? (data: Partial<ExpenseUserInput>) => updateExpense(data, selectedExpense._id)
       : (data: ExpenseUserInput) => addExpense(data),
     onSuccess: () => {
-      closeModal();
       queryClient.invalidateQueries({ queryKey: ['expenses'] });
     },
     onError: (err: AxiosError) => err,
@@ -43,10 +42,10 @@ const AddExpenseForm = ({ closeModal, selectedExpense }: ExpenseFormProps) => {
       } = formMethods;
       // TODO check why isDirty is always false
       const changedData = getDirtyValues(dirtyFields, data) as Partial<ExpenseUserInput>;
-      return expense.mutate(changedData);
+      return expense.mutate(changedData, { onSuccess: closeModal });
     }
     console.log('ADD NEW EXPENSE REQUEST', data);
-    expense.mutate(data);
+    expense.mutate(data, { onSuccess: closeModal });
   };
 
   return (
@@ -68,4 +67,4 @@ const AddExpenseForm = ({ closeModal, selectedExpense }: ExpenseFormProps) => {
   );
 };
 
-export default AddExpenseForm;
+export default ExpenseForm;
