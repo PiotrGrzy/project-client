@@ -1,32 +1,73 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import ExpenseTableItem from '@/components/ExpenseTableItem';
 import Pagination from '@/components/Pagination';
 import { Expense, IQueryParams, useExpenseQuery } from '@/services/expenses.service';
 
+import ExpenseTableHeader from '../ExpenseTableHeader';
+
+const initialQuery: IQueryParams = {
+  sortBy: 'createdAt',
+  asc: 0,
+  limit: 5,
+  next: '',
+  previous: '',
+};
+
 const ExpenseList = ({ openEditModal }: { openEditModal: (Expense: Expense) => void }) => {
-  const [queryParams, setQueryParams] = useState<IQueryParams>({
-    sortBy: 'createdAt',
-    asc: 0,
-    limit: 5,
-    next: '',
-    previous: '',
-  });
+  const [queryParams, setQueryParams] = useState<IQueryParams>(initialQuery);
   const expenses = useExpenseQuery(queryParams);
-  const handleSortChange = (sortBy: string) => {
-    setQueryParams((prev) => ({ ...prev, sortBy }));
-  };
+  const handleSortChange = useCallback((event: React.MouseEvent<HTMLTableCellElement>) => {
+    const { dataset } = event.currentTarget;
+    setQueryParams((prev) => ({ ...prev, sortBy: dataset.sort || '' }));
+  }, []);
+
   const { docs, ...meta } = expenses.data;
   return (
     <div className="overflow-x-auto w-full">
       <table className="table w-full">
         <thead>
           <tr>
-            <th onClick={() => handleSortChange('title')}>Title</th>
-            <th>Date</th>
-            <th onClick={() => handleSortChange('category')}>Category</th>
-            <th>Type</th>
-            <th>Amount</th>
+            <ExpenseTableHeader
+              name="title"
+              onSortChange={handleSortChange}
+              currentSort={queryParams.sortBy}
+              asc={!!queryParams.asc}
+            >
+              Title
+            </ExpenseTableHeader>
+            <ExpenseTableHeader
+              name="createdAt"
+              onSortChange={handleSortChange}
+              currentSort={queryParams.sortBy}
+              asc={!!queryParams.asc}
+            >
+              Date
+            </ExpenseTableHeader>
+            <ExpenseTableHeader
+              name="category"
+              onSortChange={handleSortChange}
+              currentSort={queryParams.sortBy}
+              asc={!!queryParams.asc}
+            >
+              Category
+            </ExpenseTableHeader>
+            <ExpenseTableHeader
+              name="type"
+              onSortChange={handleSortChange}
+              currentSort={queryParams.sortBy}
+              asc={!!queryParams.asc}
+            >
+              Type
+            </ExpenseTableHeader>
+            <ExpenseTableHeader
+              name="cost"
+              onSortChange={handleSortChange}
+              currentSort={queryParams.sortBy}
+              asc={!!queryParams.asc}
+            >
+              Amount
+            </ExpenseTableHeader>
             <th></th>
           </tr>
         </thead>

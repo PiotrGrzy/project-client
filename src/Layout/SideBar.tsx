@@ -1,17 +1,12 @@
-import { NavLink } from 'react-router-dom';
-
+import NavItem from '@/components/NavItem';
 import { Paths } from '@/routes/paths';
-
-export const sideBarWidth = 240;
 
 const SideBar = () => {
   return (
     <nav className="order-first sm:w-48 p-2 border-r border-slate-700/50 ">
       <ul>
-        <li>
-          <NavLink to={Paths.VERIFY}>Verify</NavLink>
-          <NavLink to={Paths.DASHBOARD}>Dashboard</NavLink>
-        </li>
+        <NavItem to={Paths.VERIFY}>Verify</NavItem>
+        <NavItem to={Paths.DASHBOARD}>Dashboard</NavItem>
       </ul>
     </nav>
   );
