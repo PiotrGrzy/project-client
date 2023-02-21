@@ -1,6 +1,9 @@
 import classNames from 'classnames';
 import { ReactNode } from 'react';
 
+import DoubleChevronDown from '../icons/DoubleChevronDown';
+import DoubleChevronUp from '../icons/DoubleChevronUp';
+
 interface ExpenseTableHeaderProps {
   name: string;
   children: ReactNode;
@@ -9,11 +12,18 @@ interface ExpenseTableHeaderProps {
   onSortChange: (event: React.MouseEvent<HTMLTableCellElement>) => void;
 }
 
-const ExpenseTableHeader = ({ children, onSortChange, name, currentSort }: ExpenseTableHeaderProps) => {
+const ExpenseTableHeader = ({ children, onSortChange, name, currentSort, asc }: ExpenseTableHeaderProps) => {
   const isActive = name === currentSort;
   return (
-    <th data-sort={name} onClick={onSortChange} className={classNames(isActive ? 'text-orange-400' : '')}>
-      {children}
+    <th
+      data-sort={name}
+      onClick={onSortChange}
+      className={classNames('cursor-pointer', isActive ? 'text-orange-400' : '')}
+    >
+      <div className="flex items-center">
+        {children}
+        {asc ? <DoubleChevronDown /> : <DoubleChevronUp />}
+      </div>
     </th>
   );
 };

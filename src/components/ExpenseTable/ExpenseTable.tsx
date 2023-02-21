@@ -17,9 +17,11 @@ const initialQuery: IQueryParams = {
 const ExpenseList = ({ openEditModal }: { openEditModal: (Expense: Expense) => void }) => {
   const [queryParams, setQueryParams] = useState<IQueryParams>(initialQuery);
   const expenses = useExpenseQuery(queryParams);
+  const { asc, sortBy } = queryParams;
   const handleSortChange = useCallback((event: React.MouseEvent<HTMLTableCellElement>) => {
     const { dataset } = event.currentTarget;
-    setQueryParams((prev) => ({ ...prev, sortBy: dataset.sort || '' }));
+    const newSortOrder = sortBy === dataset.sort && asc === 0 ? 1 : 0;
+    setQueryParams((prev) => ({ ...prev, asc: newSortOrder, sortBy: dataset.sort || '' }));
   }, []);
 
   const { docs, ...meta } = expenses.data;
@@ -28,12 +30,7 @@ const ExpenseList = ({ openEditModal }: { openEditModal: (Expense: Expense) => v
       <table className="table w-full">
         <thead>
           <tr>
-            <ExpenseTableHeader
-              name="title"
-              onSortChange={handleSortChange}
-              currentSort={queryParams.sortBy}
-              asc={!!queryParams.asc}
-            >
+            <ExpenseTableHeader name="title" onSortChange={handleSortChange} currentSort={sortBy} asc={!!asc}>
               Title
             </ExpenseTableHeader>
             <ExpenseTableHeader
