@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import AddExpenseForm from '@/components/AddExpenseForm';
+import ExpenseForm from '@/components/ExpenseForm';
 import ExpenseTable from '@/components/ExpenseTable';
 import Modal from '@/components/ui/Modal';
 import { Expense } from '@/services/expenses.service';
@@ -32,7 +32,7 @@ const DashboardView = () => {
         Add expense
       </button>
       <Modal isOpen={modalOpen} handleClose={closeModal}>
-        <AddExpenseForm closeModal={closeModal} selectedExpense={selectedExpense} />
+        <ExpenseForm closeModal={closeModal} selectedExpense={selectedExpense} />
       </Modal>
     </div>
   );

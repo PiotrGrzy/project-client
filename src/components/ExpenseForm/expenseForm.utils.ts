@@ -27,6 +27,7 @@ export const expenseCategoryOptions: { value: CategoryType; label: string }[] = 
   { value: 'rent', label: 'Rent' },
   { value: 'taxes', label: 'Taxes' },
   { value: 'clothes', label: 'Clothes' },
+  { value: 'other', label: 'Other' },
 ];
 
 export function getDirtyValues(dirtyFields: object | boolean, allValues: object): object {
