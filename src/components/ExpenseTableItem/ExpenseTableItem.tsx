@@ -19,9 +19,9 @@ const ExpenseTableItem = ({ expense, openEditModal }: ListItemProps) => {
   return (
     <tr>
       <td>{title}</td>
-      <td>{date}</td>
       <td>{category}</td>
       <td>{type}</td>
+      <td>{date}</td>
       <td>{cost}</td>
       <td>
         <button className="btn btn-ghost btn-xs" onClick={handleEdit}>

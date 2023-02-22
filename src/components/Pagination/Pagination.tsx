@@ -1,6 +1,6 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
-import { IQueryParams } from '@/services/expenses.service';
+import { ExpenseDataKeys, IQueryParams } from '@/services/expenses.service';
 
 const PER_PAGE = 5;
 
@@ -11,10 +11,15 @@ interface PaginationProps {
   next: string;
   previous: string;
   totalDocs: number;
+  sortBy: ExpenseDataKeys;
 }
 
-const Pagination = ({ setQueryParams, hasNext, hasPrevious, next, previous, totalDocs }: PaginationProps) => {
+const Pagination = ({ setQueryParams, sortBy, hasNext, hasPrevious, next, previous, totalDocs }: PaginationProps) => {
   const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [sortBy]);
 
   const totalPages = Math.ceil(totalDocs / PER_PAGE);
 

@@ -25,8 +25,16 @@ export interface IPaginateResult<T> {
   docs: T[];
 }
 
+export enum ExpenseDataKeys {
+  title = 'title',
+  category = 'category',
+  type = 'type',
+  date = 'createdAt',
+  cost = 'cost',
+}
+
 export interface IQueryParams {
-  sortBy: string;
+  sortBy: ExpenseDataKeys;
   asc: 0 | 1;
   limit: number;
   next: string;
@@ -36,15 +44,12 @@ export interface IQueryParams {
 export const addExpense = async (payload: ExpenseUserInput) => client.post('expenses', JSON.stringify(payload));
 
 export const getExpenses = async (params: IQueryParams): Promise<IPaginateResult<Expense>> => {
-  console.log('query params', params);
   const queryString = new URLSearchParams(params).toString();
   const response = await client.get(`expenses?${queryString}`);
   return response.data;
 };
 
 export const updateExpense = async (payload: Partial<ExpenseUserInput>, id: string) => {
-  console.log('id', id);
-
   return client.patch(`expenses/${id}`, JSON.stringify(payload));
 };
 

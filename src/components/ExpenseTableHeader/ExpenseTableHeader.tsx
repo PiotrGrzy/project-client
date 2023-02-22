@@ -14,6 +14,7 @@ interface ExpenseTableHeaderProps {
 
 const ExpenseTableHeader = ({ children, onSortChange, name, currentSort, asc }: ExpenseTableHeaderProps) => {
   const isActive = name === currentSort;
+
   return (
     <th
       data-sort={name}
@@ -22,7 +23,7 @@ const ExpenseTableHeader = ({ children, onSortChange, name, currentSort, asc }: 
     >
       <div className="flex items-center">
         {children}
-        {asc ? <DoubleChevronDown /> : <DoubleChevronUp />}
+        {isActive && (asc ? <DoubleChevronUp /> : <DoubleChevronDown />)}
       </div>
     </th>
   );

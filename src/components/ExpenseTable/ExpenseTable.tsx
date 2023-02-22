@@ -2,12 +2,12 @@ import { useCallback, useState } from 'react';
 
 import ExpenseTableItem from '@/components/ExpenseTableItem';
 import Pagination from '@/components/Pagination';
-import { Expense, IQueryParams, useExpenseQuery } from '@/services/expenses.service';
+import { Expense, ExpenseDataKeys, IQueryParams, useExpenseQuery } from '@/services/expenses.service';
 
 import ExpenseTableHeader from '../ExpenseTableHeader';
 
 const initialQuery: IQueryParams = {
-  sortBy: 'createdAt',
+  sortBy: ExpenseDataKeys.date,
   asc: 0,
   limit: 5,
   next: '',
@@ -17,54 +17,54 @@ const initialQuery: IQueryParams = {
 const ExpenseList = ({ openEditModal }: { openEditModal: (Expense: Expense) => void }) => {
   const [queryParams, setQueryParams] = useState<IQueryParams>(initialQuery);
   const expenses = useExpenseQuery(queryParams);
-  const { asc, sortBy } = queryParams;
+  const { asc, sortBy, next, previous } = queryParams;
+
   const handleSortChange = useCallback((event: React.MouseEvent<HTMLTableCellElement>) => {
     const { dataset } = event.currentTarget;
-    const newSortOrder = sortBy === dataset.sort && asc === 0 ? 1 : 0;
-    setQueryParams((prev) => ({ ...prev, asc: newSortOrder, sortBy: dataset.sort || '' }));
+
+    let sortOrder = asc;
+    let nextId = next;
+    let prevId = previous;
+    if (sortBy === dataset.sort) {
+      sortOrder = asc === 0 ? 1 : 0;
+    }
+    if (sortBy !== dataset.sort) {
+      nextId = '';
+      prevId = '';
+    }
+
+    console.log('newSortOrder', sortOrder);
+
+    setQueryParams((prev) => ({
+      ...prev,
+      asc: sortOrder,
+      sortBy: (dataset.sort as ExpenseDataKeys) || (initialQuery.sortBy as ExpenseDataKeys),
+      next: nextId,
+      previous: prevId,
+    }));
   }, []);
 
   const { docs, ...meta } = expenses.data;
+  console.log('meta', meta);
+
   return (
     <div className="overflow-x-auto w-full">
       <table className="table w-full">
         <thead>
           <tr>
-            <ExpenseTableHeader name="title" onSortChange={handleSortChange} currentSort={sortBy} asc={!!asc}>
-              Title
-            </ExpenseTableHeader>
-            <ExpenseTableHeader
-              name="createdAt"
-              onSortChange={handleSortChange}
-              currentSort={queryParams.sortBy}
-              asc={!!queryParams.asc}
-            >
-              Date
-            </ExpenseTableHeader>
-            <ExpenseTableHeader
-              name="category"
-              onSortChange={handleSortChange}
-              currentSort={queryParams.sortBy}
-              asc={!!queryParams.asc}
-            >
-              Category
-            </ExpenseTableHeader>
-            <ExpenseTableHeader
-              name="type"
-              onSortChange={handleSortChange}
-              currentSort={queryParams.sortBy}
-              asc={!!queryParams.asc}
-            >
-              Type
-            </ExpenseTableHeader>
-            <ExpenseTableHeader
-              name="cost"
-              onSortChange={handleSortChange}
-              currentSort={queryParams.sortBy}
-              asc={!!queryParams.asc}
-            >
-              Amount
-            </ExpenseTableHeader>
+            {Object.values(ExpenseDataKeys).map((column) => {
+              return (
+                <ExpenseTableHeader
+                  key={column}
+                  name={column}
+                  onSortChange={handleSortChange}
+                  currentSort={sortBy}
+                  asc={!!asc}
+                >
+                  {column.toLocaleLowerCase()}
+                </ExpenseTableHeader>
+              );
+            })}
             <th></th>
           </tr>
         </thead>
@@ -74,7 +74,7 @@ const ExpenseList = ({ openEditModal }: { openEditModal: (Expense: Expense) => v
           ))}
         </tbody>
       </table>
-      <Pagination setQueryParams={setQueryParams} {...meta} />
+      <Pagination setQueryParams={setQueryParams} sortBy={sortBy} {...meta} />
     </div>
   );
 };

@@ -15,11 +15,6 @@ axiosInstance.interceptors.response.use(
     return res;
   },
   async (err) => {
-    console.log('err.config.url', err.config.url);
-    console.log(
-      '!REFRESH_EXCLUDED_ENDPOINTS.includes(err.config.url)',
-      !REFRESH_EXCLUDED_ENDPOINTS.includes(err.config.url),
-    );
     if (!REFRESH_EXCLUDED_ENDPOINTS.includes(err.config.url) && err.response) {
       // Access Token was expired
       if (err.response.status === 401) {
