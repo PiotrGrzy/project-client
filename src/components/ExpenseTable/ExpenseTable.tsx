@@ -6,6 +6,8 @@ import Pagination from '@/components/Pagination';
 import Search from '@/components/Search';
 import { Expense, ExpenseDataKeys, IQueryParams, useExpenseQuery } from '@/services/expenses.service';
 
+import SectionTitle from '../ui/SectionTitle';
+
 const initialQuery: IQueryParams = {
   sortBy: ExpenseDataKeys.date,
   asc: 0,
@@ -56,7 +58,8 @@ const ExpenseList = ({ openEditModal }: { openEditModal: (Expense: Expense) => v
 
   return (
     <div className="overflow-x-auto w-full">
-      <div className="flex justify-end">
+      <div className="flex justify-between items-center">
+        <SectionTitle>Recent Transactions</SectionTitle>
         <Search onSearchChange={handleSearchChange} />
       </div>
       <table className="table w-full">
