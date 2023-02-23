@@ -39,6 +39,7 @@ export interface IQueryParams {
   limit: number;
   next: string;
   previous: string;
+  search: string;
 }
 
 export const addExpense = async (payload: ExpenseUserInput) => client.post('expenses', JSON.stringify(payload));

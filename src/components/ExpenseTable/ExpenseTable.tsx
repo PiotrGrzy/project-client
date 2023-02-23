@@ -1,10 +1,10 @@
 import { useCallback, useState } from 'react';
 
+import ExpenseTableHeader from '@/components/ExpenseTableHeader';
 import ExpenseTableItem from '@/components/ExpenseTableItem';
 import Pagination from '@/components/Pagination';
+import Search from '@/components/Search';
 import { Expense, ExpenseDataKeys, IQueryParams, useExpenseQuery } from '@/services/expenses.service';
-
-import ExpenseTableHeader from '../ExpenseTableHeader';
 
 const initialQuery: IQueryParams = {
   sortBy: ExpenseDataKeys.date,
@@ -12,6 +12,7 @@ const initialQuery: IQueryParams = {
   limit: 5,
   next: '',
   previous: '',
+  search: '',
 };
 
 const ExpenseList = ({ openEditModal }: { openEditModal: (Expense: Expense) => void }) => {
@@ -19,36 +20,45 @@ const ExpenseList = ({ openEditModal }: { openEditModal: (Expense: Expense) => v
   const expenses = useExpenseQuery(queryParams);
   const { asc, sortBy, next, previous } = queryParams;
 
-  const handleSortChange = useCallback((event: React.MouseEvent<HTMLTableCellElement>) => {
-    const { dataset } = event.currentTarget;
+  const handleSortChange = useCallback(
+    (event: React.MouseEvent<HTMLTableCellElement>) => {
+      const { dataset } = event.currentTarget;
+      // TODO refactor
+      let sortOrder = asc;
+      let nextId = next;
+      let prevId = previous;
+      if (sortBy === dataset.sort) {
+        sortOrder = asc === 0 ? 1 : 0;
+      }
+      if (sortBy !== dataset.sort) {
+        nextId = '';
+        prevId = '';
+      }
+      setQueryParams((prev) => ({
+        ...prev,
+        asc: sortOrder,
+        sortBy: (dataset.sort as ExpenseDataKeys) || (initialQuery.sortBy as ExpenseDataKeys),
+        next: nextId,
+        previous: prevId,
+      }));
+    },
+    [queryParams],
+  );
 
-    let sortOrder = asc;
-    let nextId = next;
-    let prevId = previous;
-    if (sortBy === dataset.sort) {
-      sortOrder = asc === 0 ? 1 : 0;
-    }
-    if (sortBy !== dataset.sort) {
-      nextId = '';
-      prevId = '';
-    }
-
-    console.log('newSortOrder', sortOrder);
-
+  const handleSearchChange = (searchText = '') => {
     setQueryParams((prev) => ({
       ...prev,
-      asc: sortOrder,
-      sortBy: (dataset.sort as ExpenseDataKeys) || (initialQuery.sortBy as ExpenseDataKeys),
-      next: nextId,
-      previous: prevId,
+      search: searchText,
     }));
-  }, []);
+  };
 
   const { docs, ...meta } = expenses.data;
-  console.log('meta', meta);
 
   return (
     <div className="overflow-x-auto w-full">
+      <div className="flex justify-end">
+        <Search onSearchChange={handleSearchChange} />
+      </div>
       <table className="table w-full">
         <thead>
           <tr>
