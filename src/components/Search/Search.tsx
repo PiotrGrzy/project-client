@@ -22,7 +22,7 @@ const Search = ({ onSearchChange }: SearchProps) => {
   };
 
   return (
-    <div className="form-control">
+    <div className="form-control mb-2">
       <div className="input-group">
         <span className="">
           <MagnifyGlass />

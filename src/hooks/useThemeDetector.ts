@@ -9,13 +9,13 @@ const useThemeDetector = (): Themes => {
   const [browserTheme, setBrowserTheme] = useState<Themes>(getCurrentTheme());
 
   useEffect(() => {
-    darkThemeMq.addEventListener('change', (event) => {
+    const listener: any = darkThemeMq.addEventListener('change', (event) => {
       const colorScheme = event.matches ? Themes.dark : Themes.light;
       console.log(colorScheme); // "dark" or "light"
       setBrowserTheme(colorScheme);
     });
 
-    return () => darkThemeMq.removeListener('change');
+    return () => darkThemeMq.removeEventListener('change', listener);
   }, []);
   return browserTheme;
 };

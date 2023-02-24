@@ -4,9 +4,9 @@ import ExpenseTableHeader from '@/components/ExpenseTableHeader';
 import ExpenseTableItem from '@/components/ExpenseTableItem';
 import Pagination from '@/components/Pagination';
 import Search from '@/components/Search';
+import Section from '@/components/ui/Section';
+import SectionTitle from '@/components/ui/SectionTitle';
 import { Expense, ExpenseDataKeys, IQueryParams, useExpenseQuery } from '@/services/expenses.service';
-
-import SectionTitle from '../ui/SectionTitle';
 
 const initialQuery: IQueryParams = {
   sortBy: ExpenseDataKeys.date,
@@ -57,38 +57,40 @@ const ExpenseList = ({ openEditModal }: { openEditModal: (Expense: Expense) => v
   const { docs, ...meta } = expenses.data;
 
   return (
-    <div className="overflow-x-auto w-full">
-      <div className="flex justify-between items-center">
-        <SectionTitle>Recent Transactions</SectionTitle>
-        <Search onSearchChange={handleSearchChange} />
+    <Section>
+      <div className="overflow-x-auto w-full">
+        <div className="flex justify-between items-center">
+          <SectionTitle>Recent Transactions</SectionTitle>
+          <Search onSearchChange={handleSearchChange} />
+        </div>
+        <table className="table w-full">
+          <thead>
+            <tr>
+              {Object.values(ExpenseDataKeys).map((column) => {
+                return (
+                  <ExpenseTableHeader
+                    key={column}
+                    name={column}
+                    onSortChange={handleSortChange}
+                    currentSort={sortBy}
+                    asc={!!asc}
+                  >
+                    {column.toLocaleLowerCase()}
+                  </ExpenseTableHeader>
+                );
+              })}
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {docs.map((expense) => (
+              <ExpenseTableItem expense={expense} key={expense._id} openEditModal={openEditModal} />
+            ))}
+          </tbody>
+        </table>
+        <Pagination setQueryParams={setQueryParams} sortBy={sortBy} {...meta} />
       </div>
-      <table className="table w-full">
-        <thead>
-          <tr>
-            {Object.values(ExpenseDataKeys).map((column) => {
-              return (
-                <ExpenseTableHeader
-                  key={column}
-                  name={column}
-                  onSortChange={handleSortChange}
-                  currentSort={sortBy}
-                  asc={!!asc}
-                >
-                  {column.toLocaleLowerCase()}
-                </ExpenseTableHeader>
-              );
-            })}
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {docs.map((expense) => (
-            <ExpenseTableItem expense={expense} key={expense._id} openEditModal={openEditModal} />
-          ))}
-        </tbody>
-      </table>
-      <Pagination setQueryParams={setQueryParams} sortBy={sortBy} {...meta} />
-    </div>
+    </Section>
   );
 };
 
