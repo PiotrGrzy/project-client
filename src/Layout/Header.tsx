@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 
+import ThemeSwitcher from '@/components/ThemeSwitcher';
 import { Paths } from '@/routes/paths';
 import { logoutUser } from '@/services/users.service';
 
@@ -23,6 +24,7 @@ const Header = () => {
         <Link className="text-primary" to={Paths.HOME}>
           LOGO
         </Link>
+        <ThemeSwitcher />
         <button className="btn btn-secondary" onClick={handleLogout}>
           Logout
         </button>
