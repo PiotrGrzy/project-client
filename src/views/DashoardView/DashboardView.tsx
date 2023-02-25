@@ -1,9 +1,11 @@
+import Tippy from '@tippyjs/react';
 import { useCallback, useState } from 'react';
 
 import ExpenseForm from '@/components/ExpenseForm';
 import ExpenseTable from '@/components/ExpenseTable';
 import Plus from '@/components/icons/Plus';
 import Modal from '@/components/ui/Modal';
+import Tooltip from '@/components/ui/Tooltip';
 import { Expense } from '@/services/expenses.service';
 
 const DashboardView = () => {
@@ -29,9 +31,11 @@ const DashboardView = () => {
   return (
     <div>
       <ExpenseTable openEditModal={openEditModal} />
-      <button className="btn btn-primary " onClick={openModal}>
-        <Plus />
-      </button>
+      <Tooltip placement="top" content="Add transaction" animation="scale" duration={[500, 500]}>
+        <button className="btn btn-primary " onClick={openModal}>
+          <Plus />
+        </button>
+      </Tooltip>
       <Modal isOpen={modalOpen} handleClose={closeModal}>
         <ExpenseForm closeModal={closeModal} selectedExpense={selectedExpense} />
       </Modal>

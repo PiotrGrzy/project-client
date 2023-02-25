@@ -24,10 +24,12 @@ const Header = () => {
         <Link className="text-primary" to={Paths.HOME}>
           LOGO
         </Link>
-        <ThemeSwitcher />
-        <button className="btn btn-secondary" onClick={handleLogout}>
-          Logout
-        </button>
+        <div className="flex items-center gap-4">
+          <ThemeSwitcher />
+          <button className="btn btn-secondary" onClick={handleLogout}>
+            Logout
+          </button>
+        </div>
       </div>
     </header>
   );

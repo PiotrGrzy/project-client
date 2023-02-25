@@ -1,4 +1,4 @@
-const Plus = ({ className = 'w-6 h-6' }: { className?: string }) => {
+const Power = ({ className = 'w-6 h-6' }: { className?: string }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -8,9 +8,9 @@ const Plus = ({ className = 'w-6 h-6' }: { className?: string }) => {
       stroke="currentColor"
       className={className}
     >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M5.636 5.636a9 9 0 1012.728 0M12 3v9" />
     </svg>
   );
 };
 
-export default Plus;
+export default Power;

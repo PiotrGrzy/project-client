@@ -5,6 +5,8 @@ import Sun from '@/components/icons/Sun';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import useThemeDetector from '@/hooks/useThemeDetector';
 
+import Tooltip from '../ui/Tooltip';
+
 export enum Themes {
   dark = 'coffee',
   light = 'garden',
@@ -28,7 +30,11 @@ const ThemeSwitcher = () => {
 
   return (
     <div>
-      <button onClick={changeTheme}>{localTheme === Themes.dark ? <Moon /> : <Sun />}</button>
+      <Tooltip content={localTheme === Themes.dark ? 'Set light theme' : 'Set dark theme'}>
+        <button onClick={changeTheme}>
+          {localTheme === Themes.dark ? <Moon className="w-8 h-8" /> : <Sun className="w-8 h-8" />}
+        </button>
+      </Tooltip>
     </div>
   );
 };
