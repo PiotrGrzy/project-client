@@ -1,15 +1,15 @@
 import { useCallback, useState } from 'react';
 
-import ExpenseTableItem from '@/components/ExpenseTable/ExpenseTableItem';
 import ExpenseTableHeader from '@/components/ExpenseTableHeader';
+import IncomeTableItem from '@/components/IncomeTable/IncomeTableItem';
 import Pagination from '@/components/Pagination';
 import Search from '@/components/Search';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
-import { Expense, ExpenseDataKeys, IQueryParams, useExpenseQuery } from '@/services/expenses.service';
+import { IIncomeQueryParams, Income, IncomeDataKeys, useIncomeQuery } from '@/services/income.service';
 
-const initialQuery: IQueryParams = {
-  sortBy: ExpenseDataKeys.date,
+const initialQuery: IIncomeQueryParams = {
+  sortBy: IncomeDataKeys.date,
   asc: 0,
   limit: 5,
   next: '',
@@ -17,9 +17,9 @@ const initialQuery: IQueryParams = {
   search: '',
 };
 
-const ExpenseTable = ({ openEditModal }: { openEditModal: (Expense: Expense) => void }) => {
-  const [queryParams, setQueryParams] = useState<IQueryParams>(initialQuery);
-  const expenses = useExpenseQuery(queryParams);
+const IncomeTable = ({ openEditModal }: { openEditModal: (income: Income) => void }) => {
+  const [queryParams, setQueryParams] = useState<IIncomeQueryParams>(initialQuery);
+  const incomes = useIncomeQuery(queryParams);
   const { asc, sortBy, next, previous } = queryParams;
 
   const handleSortChange = useCallback(
@@ -39,7 +39,7 @@ const ExpenseTable = ({ openEditModal }: { openEditModal: (Expense: Expense) => 
       setQueryParams((prev) => ({
         ...prev,
         asc: sortOrder,
-        sortBy: (dataset.sort as ExpenseDataKeys) || (initialQuery.sortBy as ExpenseDataKeys),
+        sortBy: (dataset.sort as IncomeDataKeys) || (initialQuery.sortBy as IncomeDataKeys),
         next: nextId,
         previous: prevId,
       }));
@@ -54,7 +54,7 @@ const ExpenseTable = ({ openEditModal }: { openEditModal: (Expense: Expense) => 
     }));
   };
 
-  const { docs, ...meta } = expenses.data;
+  const { docs, ...meta } = incomes.data;
 
   return (
     <Section>
@@ -66,7 +66,7 @@ const ExpenseTable = ({ openEditModal }: { openEditModal: (Expense: Expense) => 
         <table className="table w-full">
           <thead>
             <tr>
-              {Object.values(ExpenseDataKeys).map((column) => {
+              {Object.values(IncomeDataKeys).map((column) => {
                 return (
                   <ExpenseTableHeader
                     key={column}
@@ -83,15 +83,15 @@ const ExpenseTable = ({ openEditModal }: { openEditModal: (Expense: Expense) => 
             </tr>
           </thead>
           <tbody>
-            {docs.map((expense) => (
-              <ExpenseTableItem expense={expense} key={expense._id} openEditModal={openEditModal} />
+            {docs.map((income) => (
+              <IncomeTableItem income={income} key={income._id} openEditModal={openEditModal} />
             ))}
           </tbody>
         </table>
-        <Pagination<IQueryParams, ExpenseDataKeys> setQueryParams={setQueryParams} sortBy={sortBy} {...meta} />
+        <Pagination<IIncomeQueryParams, IncomeDataKeys> setQueryParams={setQueryParams} sortBy={sortBy} {...meta} />
       </div>
     </Section>
   );
 };
 
-export default ExpenseTable;
+export default IncomeTable;

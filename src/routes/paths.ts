@@ -5,5 +5,6 @@ export enum Paths {
   VERIFY = '/verify',
   DASHBOARD = '/dashboard',
   EXPENSES = '/expenses',
+  INCOMES = '/incomes',
   MISSING = '*',
 }

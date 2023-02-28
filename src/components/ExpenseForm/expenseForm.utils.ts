@@ -1,4 +1,4 @@
-import { CategoryType, ExpenseType, ExpenseUserInput } from '@/models/expense.schema';
+import { CategoryType, ExpenseUserInput, IntervalType } from '@/models/expense.schema';
 
 export const initialValues: ExpenseUserInput = {
   title: '',
@@ -8,7 +8,7 @@ export const initialValues: ExpenseUserInput = {
   cost: 0,
 };
 
-export const expenseTypeOptions: { value: ExpenseType; label: string }[] = [
+export const expenseTypeOptions: { value: IntervalType; label: string }[] = [
   { value: 'once', label: 'Once' },
   { value: 'daily', label: 'Daily' },
   { value: 'weekly', label: 'Weekly' },

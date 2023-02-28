@@ -1,4 +1,3 @@
-import Tippy from '@tippyjs/react';
 import { useCallback, useState } from 'react';
 
 import ExpenseForm from '@/components/ExpenseForm';

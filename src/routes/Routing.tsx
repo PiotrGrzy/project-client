@@ -5,6 +5,7 @@ import { ROLE, User } from '@/services/users.service';
 import AccountVerifyView from '@/views/AccountVerifyView';
 import DashboardView from '@/views/DashoardView/DashboardView';
 import HomeView from '@/views/HomeView';
+import IncomesView from '@/views/IncomesView';
 import MissingView from '@/views/MissingView';
 import SignInView from '@/views/SignInView';
 import SignUpView from '@/views/SignUpView';
@@ -22,6 +23,7 @@ const Routing = ({ user }: { user: User | undefined }) => {
       <Route element={<ProtectedRoute isAllowed={user?.role === ROLE.USER} />}>
         <Route path={Paths.DASHBOARD} element={<DashboardView />} />
         <Route path={Paths.MISSING} element={<MissingView />} />
+        <Route path={Paths.INCOMES} element={<IncomesView />} />
       </Route>
 
       <Route path={Paths.MISSING} element={<MissingView />} />

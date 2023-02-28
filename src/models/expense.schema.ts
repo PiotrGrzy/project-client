@@ -1,4 +1,4 @@
-import z, { coerce, number, object, string, TypeOf } from 'zod';
+import z, { coerce, object, string, TypeOf } from 'zod';
 
 const zodCostCategoryEnum = z.enum([
   'food',
@@ -13,9 +13,9 @@ const zodCostCategoryEnum = z.enum([
   'loan',
   'clothes',
 ]);
-const zodExpenseTypeEnum = z.enum(['once', 'daily', 'weekly', 'monthly', 'quarterly', 'yearly']);
+const zodIntervalTypeEnum = z.enum(['once', 'daily', 'weekly', 'monthly', 'quarterly', 'yearly']);
 
-export type ExpenseType = z.infer<typeof zodExpenseTypeEnum>;
+export type IntervalType = z.infer<typeof zodIntervalTypeEnum>;
 export type CategoryType = z.infer<typeof zodCostCategoryEnum>;
 
 export const expenseSchema = object({
@@ -26,7 +26,7 @@ export const expenseSchema = object({
     .max(64, 'Title maximum length is 64 chars'),
   description: string().max(255, 'Description maximum length is 255 chars'),
   cost: coerce.number().nonnegative('Cost must be larger than 0'),
-  type: zodExpenseTypeEnum,
+  type: zodIntervalTypeEnum,
   category: zodCostCategoryEnum,
 });
 

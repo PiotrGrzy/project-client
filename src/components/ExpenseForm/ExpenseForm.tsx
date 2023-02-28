@@ -44,7 +44,6 @@ const ExpenseForm = ({ closeModal, selectedExpense }: ExpenseFormProps) => {
       const changedData = getDirtyValues(dirtyFields, data) as Partial<ExpenseUserInput>;
       return expense.mutate(changedData, { onSuccess: closeModal });
     }
-    console.log('ADD NEW EXPENSE REQUEST', data);
     expense.mutate(data, { onSuccess: closeModal });
   };
 

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { CategoryType, ExpenseType, ExpenseUserInput } from '@/models/expense.schema';
+import { CategoryType, ExpenseUserInput, IntervalType } from '@/models/expense.schema';
 import client from '@/services/axios.instance';
 
 export type Expense = {
@@ -9,7 +9,7 @@ export type Expense = {
   title: string;
   description: string;
   category: CategoryType;
-  type: ExpenseType;
+  type: IntervalType;
   cost: number;
   createdAt: string;
   updatedAt: string;

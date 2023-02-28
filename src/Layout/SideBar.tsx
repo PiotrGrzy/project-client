@@ -13,6 +13,9 @@ const SideBar = () => {
         <NavItem to={Paths.DASHBOARD}>
           <Squares /> Dashboard
         </NavItem>
+        <NavItem to={Paths.INCOMES}>
+          <Gear /> Incomes
+        </NavItem>
         <NavItem to={'/'}>
           <ChartBar /> Statistics
         </NavItem>

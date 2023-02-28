@@ -1,20 +1,26 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
-import { ExpenseDataKeys, IQueryParams } from '@/services/expenses.service';
-
 const PER_PAGE = 5;
 
-interface PaginationProps {
-  setQueryParams: Dispatch<SetStateAction<IQueryParams>>;
+interface PaginationProps<T, K> {
+  setQueryParams: Dispatch<SetStateAction<T>>;
   hasNext: boolean;
   hasPrevious: boolean;
   next: string;
   previous: string;
   totalDocs: number;
-  sortBy: ExpenseDataKeys;
+  sortBy: K;
 }
 
-const Pagination = ({ setQueryParams, sortBy, hasNext, hasPrevious, next, previous, totalDocs }: PaginationProps) => {
+const Pagination = <T, K>({
+  setQueryParams,
+  sortBy,
+  hasNext,
+  hasPrevious,
+  next,
+  previous,
+  totalDocs,
+}: PaginationProps<T, K>) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -24,12 +30,12 @@ const Pagination = ({ setQueryParams, sortBy, hasNext, hasPrevious, next, previo
   const totalPages = Math.ceil(totalDocs / PER_PAGE);
 
   const handleNextPage = () => {
-    setQueryParams((prev) => ({ ...prev, next, previous: '' }));
+    setQueryParams((prev: T) => ({ ...prev, next, previous: '' }));
     setCurrentPage((prev) => prev + 1);
   };
 
   const handlePreviousPage = () => {
-    setQueryParams((prev: IQueryParams) => ({ ...prev, previous, next: '' }));
+    setQueryParams((prev: T) => ({ ...prev, previous, next: '' }));
     setCurrentPage((prev) => prev - 1);
   };
 
