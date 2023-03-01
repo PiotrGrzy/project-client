@@ -39,6 +39,14 @@ const Pagination = <T, K>({
     setCurrentPage((prev) => prev - 1);
   };
 
+  if (totalDocs === 0) {
+    return (
+      <div className="m-4">
+        <p className="text-center font-medium"> No data in selected range</p>
+      </div>
+    );
+  }
+
   return (
     <div className="flex justify-center">
       <div className="btn-group my-2">
