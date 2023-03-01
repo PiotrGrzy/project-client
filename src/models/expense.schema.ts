@@ -13,7 +13,7 @@ const zodCostCategoryEnum = z.enum([
   'loan',
   'clothes',
 ]);
-const zodIntervalTypeEnum = z.enum(['once', 'daily', 'weekly', 'monthly', 'quarterly', 'yearly']);
+export const zodIntervalTypeEnum = z.enum(['once', 'daily', 'weekly', 'monthly', 'quarterly', 'yearly']);
 
 export type IntervalType = z.infer<typeof zodIntervalTypeEnum>;
 export type CategoryType = z.infer<typeof zodCostCategoryEnum>;

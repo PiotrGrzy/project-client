@@ -8,7 +8,7 @@ export const initialValues: ExpenseUserInput = {
   cost: 0,
 };
 
-export const expenseTypeOptions: { value: IntervalType; label: string }[] = [
+export const intervalTypeOptions: { value: IntervalType; label: string }[] = [
   { value: 'once', label: 'Once' },
   { value: 'daily', label: 'Daily' },
   { value: 'weekly', label: 'Weekly' },
@@ -29,10 +29,3 @@ export const expenseCategoryOptions: { value: CategoryType; label: string }[] = 
   { value: 'clothes', label: 'Clothes' },
   { value: 'other', label: 'Other' },
 ];
-
-export function getDirtyValues(dirtyFields: object | boolean, allValues: object): object {
-  if (dirtyFields === true || Array.isArray(dirtyFields)) return allValues;
-  return Object.fromEntries(
-    Object.keys(dirtyFields).map((key) => [key, getDirtyValues(dirtyFields[key], allValues[key])]),
-  );
-}

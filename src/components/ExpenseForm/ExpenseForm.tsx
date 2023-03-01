@@ -8,8 +8,9 @@ import Select from '@/components/ui/Select';
 import TextFormInput from '@/components/ui/TextFormInput';
 import { expenseSchema, ExpenseUserInput } from '@/models/expense.schema';
 import { addExpense, Expense, updateExpense } from '@/services/expenses.service';
+import { getFormDirtyValues } from '@/utils';
 
-import { expenseCategoryOptions, expenseTypeOptions, getDirtyValues, initialValues } from './expenseForm.utils';
+import { expenseCategoryOptions, initialValues, intervalTypeOptions } from './expenseForm.utils';
 
 interface ExpenseFormProps {
   closeModal: () => void;
@@ -41,7 +42,7 @@ const ExpenseForm = ({ closeModal, selectedExpense }: ExpenseFormProps) => {
         formState: { dirtyFields, isDirty },
       } = formMethods;
       // TODO check why isDirty is always false
-      const changedData = getDirtyValues(dirtyFields, data) as Partial<ExpenseUserInput>;
+      const changedData = getFormDirtyValues(dirtyFields, data) as ExpenseUserInput;
       return expense.mutate(changedData, { onSuccess: closeModal });
     }
     expense.mutate(data, { onSuccess: closeModal });
@@ -55,7 +56,7 @@ const ExpenseForm = ({ closeModal, selectedExpense }: ExpenseFormProps) => {
           <TextFormInput name="title" label="Title" />
           <TextFormInput name="description" label="Description" />
           <Select name="category" label="Category" options={expenseCategoryOptions} />
-          <Select name="type" label="Type" options={expenseTypeOptions} />
+          <Select name="type" label="Type" options={intervalTypeOptions} />
           <TextFormInput name="cost" label="Cost" type="number" />
           <button className="btn btn-primary" type="submit">
             {selectedExpense ? 'Save changes' : 'Add expense'}

@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { IntervalType } from '@/models/expense.schema';
+import { IncomeUserInput } from '@/models/income.schema';
 import client from '@/services/axios.instance';
 
 import { IPaginateResult } from './expenses.service';
@@ -31,11 +32,16 @@ export interface IIncomeQueryParams {
   previous: string;
   search: string;
 }
+export const addIncome = async (payload: IncomeUserInput) => client.post('incomes', JSON.stringify(payload));
 
 export const getIncomes = async (params: IIncomeQueryParams): Promise<IPaginateResult<Income>> => {
   const queryString = new URLSearchParams(params).toString();
   const response = await client.get(`incomes?${queryString}`);
   return response.data;
+};
+
+export const updateIncome = async (payload: Partial<IncomeUserInput>, id: string) => {
+  return client.patch(`incomes/${id}`, JSON.stringify(payload));
 };
 
 export const useIncomeQuery = (queryParams: IIncomeQueryParams) => {
