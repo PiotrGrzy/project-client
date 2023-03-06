@@ -23,9 +23,12 @@ export type User = {
 };
 
 export const createUser = async (payload: CreateUserInput) => client.post('users', JSON.stringify(payload));
+
 export const signInUser = async (payload: SignInUserInput) => client.post('sessions', JSON.stringify(payload));
+
 export const verifyUserAccount = async (payload: VerifyUserInput) =>
   client.get(`users/verify/${payload.id}/${payload.verificationCode}`);
+
 export const getCurrentUser = async (): Promise<User> => {
   const response = await client.get('users/me');
   return response.data;
