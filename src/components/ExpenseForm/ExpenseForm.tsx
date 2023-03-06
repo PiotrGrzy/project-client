@@ -8,7 +8,7 @@ import Select from '@/components/ui/Select';
 import TextFormInput from '@/components/ui/TextFormInput';
 import { expenseSchema, ExpenseUserInput } from '@/models/expense.schema';
 import { addExpense, Expense, updateExpense } from '@/services/expenses.service';
-import { getFormDirtyValues } from '@/utils';
+import { getFormDirtyValues } from '@/utils/common';
 
 import { expenseCategoryOptions, initialValues, intervalTypeOptions } from './expenseForm.utils';
 

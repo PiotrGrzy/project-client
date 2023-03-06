@@ -19,10 +19,10 @@ const SideBar = () => {
         <NavItem to={Paths.INCOMES}>
           <Gear /> Incomes
         </NavItem>
-        <NavItem to={'/'}>
+        <NavItem to={Paths.STATS}>
           <ChartBar /> Statistics
         </NavItem>
-        <NavItem to={'/'}>
+        <NavItem to={Paths.GOALS}>
           <Sparkles /> Goals
         </NavItem>
         <NavItem to={'/'}>

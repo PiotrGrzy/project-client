@@ -8,7 +8,7 @@ import Select from '@/components/ui/Select';
 import TextFormInput from '@/components/ui/TextFormInput';
 import { incomeSchema, IncomeUserInput } from '@/models/income.schema';
 import { addIncome, Income, updateIncome } from '@/services/income.service';
-import { getFormDirtyValues } from '@/utils';
+import { getFormDirtyValues } from '@/utils/common';
 
 import { intervalTypeOptions } from '../ExpenseForm/expenseForm.utils';
 

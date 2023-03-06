@@ -1,5 +1,3 @@
-import { IStatsParams } from '@/services/stats.service';
-
 export function enumKeys<O extends object, K extends keyof O = keyof O>(obj: O): K[] {
   return Object.keys(obj).filter((k) => Number.isNaN(+k)) as K[];
 }
@@ -10,11 +8,3 @@ export function getFormDirtyValues(dirtyFields: object | boolean, allValues: obj
     Object.keys(dirtyFields).map((key) => [key, getFormDirtyValues(dirtyFields[key], allValues[key])]),
   );
 }
-
-// export function getLastWeekPeriod = ():IStatsParams => {
-
-// }
-
-// export function getLastMonthPeriod = ():IStatsParams => {
-
-// }

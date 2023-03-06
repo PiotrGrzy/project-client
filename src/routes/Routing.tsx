@@ -5,11 +5,13 @@ import { ROLE, User } from '@/services/users.service';
 import AccountVerifyView from '@/views/AccountVerifyView';
 import DashboardView from '@/views/DashoardView/DashboardView';
 import ExpensesView from '@/views/ExpensesView';
+import GoalsView from '@/views/GoalsView';
 import HomeView from '@/views/HomeView';
 import IncomesView from '@/views/IncomesView';
 import MissingView from '@/views/MissingView';
 import SignInView from '@/views/SignInView';
 import SignUpView from '@/views/SignUpView';
+import StatiscticsView from '@/views/StatiscticsView';
 
 import { Paths } from './paths';
 
@@ -26,6 +28,9 @@ const Routing = ({ user }: { user: User | undefined }) => {
         <Route path={Paths.EXPENSES} element={<ExpensesView />} />
         <Route path={Paths.INCOMES} element={<IncomesView />} />
         <Route path={Paths.MISSING} element={<MissingView />} />
+        <Route path={Paths.STATS} element={<StatiscticsView />} />
+        <Route path={Paths.STATS} element={<StatiscticsView />} />
+        <Route path={Paths.GOALS} element={<GoalsView />} />
       </Route>
 
       <Route path={Paths.MISSING} element={<MissingView />} />
