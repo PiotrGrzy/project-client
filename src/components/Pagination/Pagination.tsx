@@ -42,7 +42,7 @@ const Pagination = <T, K>({
   if (totalDocs === 0) {
     return (
       <div className="m-4">
-        <p className="text-center font-medium"> No data in selected range</p>
+        <p className="text-center font-medium"> No data in selected period</p>
       </div>
     );
   }

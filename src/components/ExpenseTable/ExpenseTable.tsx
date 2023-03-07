@@ -1,3 +1,4 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCallback, useState } from 'react';
 
 import ExpenseTableItem from '@/components/ExpenseTable/ExpenseTableItem';
@@ -6,7 +7,10 @@ import Pagination from '@/components/Pagination';
 import Search from '@/components/Search';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
-import { Expense, ExpenseDataKeys, IQueryParams, useExpenseQuery } from '@/services/expenses.service';
+import { useConfirm } from '@/context/confirmContext';
+import { deleteExpense, ExpenseDataKeys, IQueryParams, useExpenseQuery } from '@/services/expenses.service';
+
+import ConfirmModal from '../ConfirmModal';
 
 const initialQuery: IQueryParams = {
   sortBy: ExpenseDataKeys.date,
@@ -17,9 +21,17 @@ const initialQuery: IQueryParams = {
   search: '',
 };
 
-const ExpenseTable = ({ openEditModal }: { openEditModal: (Expense: Expense) => void }) => {
+const ExpenseTable = () => {
+  const queryClient = useQueryClient();
   const [queryParams, setQueryParams] = useState<IQueryParams>(initialQuery);
   const expenses = useExpenseQuery(queryParams);
+  const expense = useMutation({
+    mutationFn: (id: string) => deleteExpense(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['expenses'] });
+    },
+  });
+  const { openConfirm, param, closeConfirm } = useConfirm();
   const { asc, sortBy, next, previous } = queryParams;
 
   const handleSortChange = useCallback(
@@ -54,6 +66,10 @@ const ExpenseTable = ({ openEditModal }: { openEditModal: (Expense: Expense) => 
     }));
   };
 
+  const handleDelete = () => {
+    expense.mutate(param, { onSuccess: closeConfirm });
+  };
+
   const { docs, ...meta } = expenses.data;
 
   return (
@@ -80,15 +96,17 @@ const ExpenseTable = ({ openEditModal }: { openEditModal: (Expense: Expense) => 
                 );
               })}
               <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             {docs.map((expense) => (
-              <ExpenseTableItem expense={expense} key={expense._id} openEditModal={openEditModal} />
+              <ExpenseTableItem expense={expense} key={expense._id} openDeleteConfirm={openConfirm} />
             ))}
           </tbody>
         </table>
         <Pagination<IQueryParams, ExpenseDataKeys> setQueryParams={setQueryParams} sortBy={sortBy} {...meta} />
+        <ConfirmModal confirmText="Are you sure you want delete this exppense?" onConfirm={handleDelete} />
       </div>
     </Section>
   );

@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
+import { CategoryType } from '@/models/expense.schema';
 import client from '@/services/axios.instance';
 
 export interface IStatsParams {
@@ -8,7 +9,7 @@ export interface IStatsParams {
 }
 
 export type Stats = {
-  _id: string | null;
+  _id: CategoryType | null;
   total: number;
 };
 

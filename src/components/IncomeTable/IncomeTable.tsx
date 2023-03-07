@@ -17,7 +17,7 @@ const initialQuery: IIncomeQueryParams = {
   search: '',
 };
 
-const IncomeTable = ({ openEditModal }: { openEditModal: (income: Income) => void }) => {
+const IncomeTable = () => {
   const [queryParams, setQueryParams] = useState<IIncomeQueryParams>(initialQuery);
   const incomes = useIncomeQuery(queryParams);
   const { asc, sortBy, next, previous } = queryParams;
@@ -84,7 +84,7 @@ const IncomeTable = ({ openEditModal }: { openEditModal: (income: Income) => voi
           </thead>
           <tbody>
             {docs.map((income) => (
-              <IncomeTableItem income={income} key={income._id} openEditModal={openEditModal} />
+              <IncomeTableItem income={income} key={income._id} />
             ))}
           </tbody>
         </table>

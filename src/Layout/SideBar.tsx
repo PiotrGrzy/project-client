@@ -1,5 +1,7 @@
 import ChartBar from '@/components/icons/ChartBar';
 import Gear from '@/components/icons/Gear';
+import Income from '@/components/icons/Income';
+import Outcome from '@/components/icons/Outcome';
 import Sparkles from '@/components/icons/Sparkles';
 import Squares from '@/components/icons/Squares';
 import NavItem from '@/components/NavItem';
@@ -14,10 +16,10 @@ const SideBar = () => {
           <Squares /> Dashboard
         </NavItem>
         <NavItem to={Paths.EXPENSES}>
-          <Gear /> Expenses
+          <Outcome /> Expenses
         </NavItem>
         <NavItem to={Paths.INCOMES}>
-          <Gear /> Incomes
+          <Income /> Incomes
         </NavItem>
         <NavItem to={Paths.STATS}>
           <ChartBar /> Statistics

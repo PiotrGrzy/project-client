@@ -6,18 +6,19 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import Form from '@/components/ui/Form';
 import Select from '@/components/ui/Select';
 import TextFormInput from '@/components/ui/TextFormInput';
+import { useModal } from '@/context/modalContext';
 import { expenseSchema, ExpenseUserInput } from '@/models/expense.schema';
 import { addExpense, Expense, updateExpense } from '@/services/expenses.service';
 import { getFormDirtyValues } from '@/utils/common';
 
 import { expenseCategoryOptions, initialValues, intervalTypeOptions } from './expenseForm.utils';
 
-interface ExpenseFormProps {
-  closeModal: () => void;
-  selectedExpense: Expense | null;
-}
+// interface ExpenseFormProps {
+//   closeModal: () => void;
+// }
 
-const ExpenseForm = ({ closeModal, selectedExpense }: ExpenseFormProps) => {
+const ExpenseForm = () => {
+  const { selectedTransaction: selectedExpense, closeModal } = useModal();
   const queryClient = useQueryClient();
   const expense = useMutation({
     mutationFn: selectedExpense

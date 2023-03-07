@@ -1,20 +1,20 @@
-import dayjs from 'dayjs';
-
+import { useModal } from '@/context/modalContext';
 import { Income } from '@/services/income.service';
+import { dateDisplayFormat } from '@/utils/dates';
 
 interface ListItemProps {
   income: Income;
-  openEditModal: (income: Income) => void;
 }
 
-const IncomeTableItem = ({ income, openEditModal }: ListItemProps) => {
+const IncomeTableItem = ({ income }: ListItemProps) => {
+  const { openModal } = useModal();
   const { title, value, type, createdAt } = income;
 
   const handleEdit = () => {
-    openEditModal(income);
+    openModal(income);
   };
 
-  const date = dayjs(createdAt).format('DD/MM/YYYY');
+  const date = dateDisplayFormat(createdAt);
 
   return (
     <tr>

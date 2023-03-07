@@ -9,16 +9,19 @@ import { BrowserRouter } from 'react-router-dom';
 const queryClient = new QueryClient();
 
 import App from './App';
+import ConfirmContextProvider from './context/confirmContext';
 import ModalContextProvider from './context/modalContext';
 
 ReactDOM.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <ModalContextProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-        <ReactQueryDevtools initialIsOpen={true} />
+        <ConfirmContextProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+          <ReactQueryDevtools initialIsOpen={true} />
+        </ConfirmContextProvider>
       </ModalContextProvider>
     </QueryClientProvider>
   </React.StrictMode>,

@@ -6,6 +6,8 @@
 // - current week
 // - current month
 // - current year
+import dayjs from 'dayjs';
+
 import { IStatsParams } from '@/services/stats.service';
 
 const getDaysInMonth = (year: number, month: number) => {
@@ -60,4 +62,8 @@ export function getCurrentYear(): IStatsParams {
   const now = new Date();
   const yearStart = new Date(now.getFullYear(), 0, 1);
   return { startDate: yearStart.toDateString(), endDate: now.toDateString() };
+}
+
+export function dateDisplayFormat(date: string) {
+  return dayjs(date).format('DD/MM/YYYY');
 }

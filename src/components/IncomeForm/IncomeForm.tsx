@@ -6,16 +6,12 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import Form from '@/components/ui/Form';
 import Select from '@/components/ui/Select';
 import TextFormInput from '@/components/ui/TextFormInput';
+import { useModal } from '@/context/modalContext';
 import { incomeSchema, IncomeUserInput } from '@/models/income.schema';
-import { addIncome, Income, updateIncome } from '@/services/income.service';
+import { addIncome, updateIncome } from '@/services/income.service';
 import { getFormDirtyValues } from '@/utils/common';
 
 import { intervalTypeOptions } from '../ExpenseForm/expenseForm.utils';
-
-interface IncomeFormProps {
-  closeModal: () => void;
-  selectedIncome: Income | null;
-}
 
 const initialValues: IncomeUserInput = {
   title: '',
@@ -23,7 +19,8 @@ const initialValues: IncomeUserInput = {
   value: 0,
 };
 
-const IncomeForm = ({ closeModal, selectedIncome }: IncomeFormProps) => {
+const IncomeForm = () => {
+  const { selectedTransaction: selectedIncome, closeModal } = useModal();
   const queryClient = useQueryClient();
   const expense = useMutation({
     mutationFn: selectedIncome

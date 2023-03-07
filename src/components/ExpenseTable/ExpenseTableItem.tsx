@@ -1,20 +1,27 @@
 import dayjs from 'dayjs';
 
+import { useModal } from '@/context/modalContext';
 import { Expense } from '@/services/expenses.service';
+import { dateDisplayFormat } from '@/utils/dates';
 
 interface ListItemProps {
   expense: Expense;
-  openEditModal: (expense: Expense) => void;
+  openDeleteConfirm: (id: string) => void;
 }
 
-const ExpenseTableItem = ({ expense, openEditModal }: ListItemProps) => {
+const ExpenseTableItem = ({ expense, openDeleteConfirm }: ListItemProps) => {
+  const { openModal } = useModal();
   const { title, cost, category, type, createdAt } = expense;
 
   const handleEdit = () => {
-    openEditModal(expense);
+    openModal(expense);
   };
 
-  const date = dayjs(createdAt).format('DD/MM/YYYY');
+  const handleDelete = () => {
+    openDeleteConfirm(expense._id);
+  };
+
+  const date = dateDisplayFormat(createdAt);
 
   return (
     <tr>
@@ -26,6 +33,11 @@ const ExpenseTableItem = ({ expense, openEditModal }: ListItemProps) => {
       <td>
         <button className="btn btn-ghost btn-xs" onClick={handleEdit}>
           edit
+        </button>
+      </td>
+      <td>
+        <button className="btn btn-ghost btn-xs text-red-800" onClick={handleDelete}>
+          delete
         </button>
       </td>
     </tr>

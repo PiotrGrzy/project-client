@@ -54,6 +54,10 @@ export const updateExpense = async (payload: Partial<ExpenseUserInput>, id: stri
   return client.patch(`expenses/${id}`, JSON.stringify(payload));
 };
 
+export const deleteExpense = async (id: string) => {
+  return client.delete(`expenses/${id}`);
+};
+
 export const useExpenseQuery = (queryParams: IQueryParams) => {
   return useQuery({
     queryKey: ['expenses', queryParams],
