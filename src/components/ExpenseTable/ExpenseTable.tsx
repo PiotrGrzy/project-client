@@ -8,12 +8,12 @@ import Search from '@/components/Search';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
 import { useConfirm } from '@/context/confirmContext';
-import { deleteExpense, ExpenseDataKeys, IQueryParams, useExpenseQuery } from '@/services/expenses.service';
+import { deleteExpense, ExpenseSortKeys, IQueryParams, useExpenseQuery } from '@/services/expenses.service';
 
 import ConfirmModal from '../ConfirmModal';
 
 const initialQuery: IQueryParams = {
-  sortBy: ExpenseDataKeys.date,
+  sortBy: ExpenseSortKeys.date,
   asc: 0,
   limit: 5,
   next: '',
@@ -51,7 +51,7 @@ const ExpenseTable = () => {
       setQueryParams((prev) => ({
         ...prev,
         asc: sortOrder,
-        sortBy: (dataset.sort as ExpenseDataKeys) || (initialQuery.sortBy as ExpenseDataKeys),
+        sortBy: (dataset.sort as ExpenseSortKeys) || (initialQuery.sortBy as ExpenseSortKeys),
         next: nextId,
         previous: prevId,
       }));
@@ -82,7 +82,7 @@ const ExpenseTable = () => {
         <table className="table w-full">
           <thead>
             <tr>
-              {Object.values(ExpenseDataKeys).map((column) => {
+              {Object.values(ExpenseSortKeys).map((column) => {
                 return (
                   <ExpenseTableHeader
                     key={column}
@@ -105,7 +105,7 @@ const ExpenseTable = () => {
             ))}
           </tbody>
         </table>
-        <Pagination<IQueryParams, ExpenseDataKeys> setQueryParams={setQueryParams} sortBy={sortBy} {...meta} />
+        <Pagination<IQueryParams, ExpenseSortKeys> setQueryParams={setQueryParams} sortBy={sortBy} {...meta} />
         <ConfirmModal confirmText="Are you sure you want delete this exppense?" onConfirm={handleDelete} />
       </div>
     </Section>

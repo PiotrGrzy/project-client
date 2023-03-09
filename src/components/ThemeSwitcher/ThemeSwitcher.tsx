@@ -2,10 +2,9 @@ import { useEffect } from 'react';
 
 import Moon from '@/components/icons/Moon';
 import Sun from '@/components/icons/Sun';
+import Tooltip from '@/components/ui/Tooltip';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import useThemeDetector from '@/hooks/useThemeDetector';
-
-import Tooltip from '../ui/Tooltip';
 
 export enum Themes {
   dark = 'coffee',
@@ -20,6 +19,7 @@ const ThemeSwitcher = () => {
     const html = document.querySelector('html');
     if (html) {
       html.setAttribute('data-theme', localTheme);
+      html.className = localTheme === Themes.dark ? 'dark' : '';
     }
   }, [localTheme]);
 

@@ -14,15 +14,14 @@ export type Stats = {
 };
 
 export const getIncomeStats = async (params: IStatsParams) => {
-  const queryString = new URLSearchParams(params).toString();
-  const response = await client.get(`stats/income?${queryString}`);
+  const searchParams = new URLSearchParams(params).toString();
+  const response = await client.get(`stats/income?${searchParams}`);
   return response.data;
 };
 
 export const getExpenseStats = async (params: IStatsParams) => {
-  const queryString = new URLSearchParams(params).toString();
-
-  const response = await client.get(`stats/expense?${queryString}`);
+  const searchParams = new URLSearchParams(params).toString();
+  const response = await client.get(`stats/expense?${searchParams}`);
   return response.data;
 };
 

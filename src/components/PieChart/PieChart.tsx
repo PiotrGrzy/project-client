@@ -1,3 +1,4 @@
+import { SvgWrapper, ThemeProvider } from '@nivo/core';
 import { ResponsivePie } from '@nivo/pie';
 
 import { CategoryType } from '@/models/expense.schema';
@@ -23,7 +24,7 @@ const PieChart = ({ data, dataKey }: { data: Stats[]; dataKey: string }) => {
       padAngle={0.7}
       cornerRadius={3}
       activeOuterRadiusOffset={8}
-      colors={{ scheme: 'dark2' }}
+      colors={{ datum: 'data.color' }}
       borderWidth={1}
       borderColor={{
         from: 'color',
@@ -40,12 +41,12 @@ const PieChart = ({ data, dataKey }: { data: Stats[]; dataKey: string }) => {
       }}
       legends={[
         {
-          anchor: 'bottom',
-          direction: 'row',
+          anchor: 'right',
+          direction: 'column',
           justify: false,
           translateX: 0,
-          translateY: 56,
-          itemsSpacing: 0,
+          translateY: 16,
+          itemsSpacing: 10,
           itemWidth: 100,
           itemHeight: 18,
           itemTextColor: '#999',
@@ -53,14 +54,6 @@ const PieChart = ({ data, dataKey }: { data: Stats[]; dataKey: string }) => {
           itemOpacity: 1,
           symbolSize: 18,
           symbolShape: 'circle',
-          effects: [
-            {
-              on: 'hover',
-              style: {
-                itemTextColor: '#000',
-              },
-            },
-          ],
         },
       ]}
     />

@@ -25,7 +25,7 @@ export interface IPaginateResult<T> {
   docs: T[];
 }
 
-export enum ExpenseDataKeys {
+export enum ExpenseSortKeys {
   title = 'title',
   category = 'category',
   type = 'type',
@@ -34,7 +34,7 @@ export enum ExpenseDataKeys {
 }
 
 export interface IQueryParams {
-  sortBy: ExpenseDataKeys;
+  sortBy: ExpenseSortKeys;
   asc: 0 | 1;
   limit: number;
   next: string;

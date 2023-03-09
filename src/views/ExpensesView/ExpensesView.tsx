@@ -1,3 +1,4 @@
+import DateRangePicker from '@/components/DateRangePicker';
 import ExpenseForm from '@/components/ExpenseForm';
 import ExpenseTable from '@/components/ExpenseTable';
 import Plus from '@/components/icons/Plus';
@@ -14,6 +15,7 @@ const ExpensesView = () => {
 
   return (
     <div>
+      <DateRangePicker />
       <ExpenseTable />
       <Tooltip placement="top" content="Add transaction" animation="scale" duration={[500, 500]}>
         <button className="btn btn-primary " onClick={handleOpenModal}>

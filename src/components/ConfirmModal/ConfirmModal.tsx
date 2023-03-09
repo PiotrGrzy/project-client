@@ -28,15 +28,17 @@ const ConfirmModal = ({ confirmText, onConfirm }: ConfirmModalProps) => {
           <button className="btn btn-sm btn-circle absolute right-0 -top-10" onClick={closeConfirm}>
             ✕
           </button>
-          <div className="bg-base-100 shadow-2xl ">
-            <h2>{confirmText}</h2>
-            <div className="flex justify-between">
-              <button className="btn" onClick={closeConfirm}>
-                Cancel
-              </button>
-              <button className="btn" onClick={handleConfirm}>
-                Confirm
-              </button>
+          <div className="card w-full max-w-lg shadow-2xl bg-base-100">
+            <div className="card-body gap-0">
+              <h2 className="mb-14 text-lg font-semibold text-center">{confirmText}</h2>
+              <div className="flex justify-between">
+                <button className="btn btn-sm btn-secondary" onClick={closeConfirm}>
+                  Cancel
+                </button>
+                <button className="btn btn-sm btn-primary" onClick={handleConfirm}>
+                  Confirm
+                </button>
+              </div>
             </div>
           </div>
         </div>
