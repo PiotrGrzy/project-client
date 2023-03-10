@@ -15,10 +15,12 @@ const ConfirmModal = ({ confirmText, onConfirm }: ConfirmModalProps) => {
   const ref = useRef<HTMLDivElement>(null);
   useOutsideClick(closeConfirm, ref);
   useEscapeKey(closeConfirm);
+
   const handleConfirm = () => {
     onConfirm(param);
     closeConfirm();
   };
+
   if (!isOpen) return null;
 
   return ReactDOM.createPortal(
