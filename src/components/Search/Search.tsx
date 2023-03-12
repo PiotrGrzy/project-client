@@ -3,6 +3,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import useDebounce from '@/hooks/useDebounce';
 
 import MagnifyGlass from '../icons/MagnifyGlass';
+import useIsMount from '@/hooks/useIsMount';
 const SEARCH_DELAY = 500;
 
 interface SearchProps {
@@ -10,10 +11,13 @@ interface SearchProps {
 }
 
 const Search = ({ onSearchChange }: SearchProps) => {
+  const isMounting = useIsMount();
   const [searchValue, setSearchValue] = useState('');
   const debouncedSearch = useDebounce(searchValue, SEARCH_DELAY);
 
   useEffect(() => {
+    if (isMounting) return;
+    console.log('onSearchChange launched with', debouncedSearch);
     onSearchChange(debouncedSearch);
   }, [debouncedSearch]);
 

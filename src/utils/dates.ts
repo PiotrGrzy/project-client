@@ -1,11 +1,3 @@
-//  - last 7 days
-// - last 30days
-// - last month
-// - last 3 months
-// - last year
-// - current week
-// - current month
-// - current year
 import dayjs from 'dayjs';
 
 import { IStatsParams } from '@/services/stats.service';
