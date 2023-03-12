@@ -1,9 +1,9 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 
 import useDebounce from '@/hooks/useDebounce';
+import useIsMount from '@/hooks/useIsMount';
 
 import MagnifyGlass from '../icons/MagnifyGlass';
-import useIsMount from '@/hooks/useIsMount';
 const SEARCH_DELAY = 500;
 
 interface SearchProps {
