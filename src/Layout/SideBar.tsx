@@ -11,7 +11,6 @@ const SideBar = () => {
   return (
     <nav className="order-first sm:w-48 p-2 border-r border-slate-700/50 ">
       <ul>
-        <NavItem to={Paths.VERIFY}>Verify</NavItem>
         <NavItem to={Paths.DASHBOARD}>
           <Squares /> Dashboard
         </NavItem>

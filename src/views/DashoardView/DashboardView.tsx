@@ -25,6 +25,8 @@ const DashboardView = () => {
     () => getBalanceStats(expenseStats.data, incomeStats.data),
     [expenseStats.data, incomeStats.data],
   );
+  console.log(queryParams);
+  console.log('Test ninja');
 
   return (
     <div>
@@ -44,7 +46,7 @@ const DashboardView = () => {
           <Balance className="w-12 h-12" />
         </DachboardCard>
       </div>
-      <div className="h-96">
+      <div className="h-96 w-full md:w-1/2 ">
         <PieChart data={expenseStats.data} dataKey="cost" />
       </div>
     </div>
