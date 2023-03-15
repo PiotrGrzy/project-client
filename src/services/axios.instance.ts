@@ -16,7 +16,6 @@ axiosInstance.interceptors.response.use(
   },
   async (err) => {
     if (!REFRESH_EXCLUDED_ENDPOINTS.includes(err.config.url) && err.response) {
-      // Access Token was expired
       if (err.response.status === 401) {
         try {
           await axiosInstance.post('sessions/refresh');

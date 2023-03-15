@@ -13,10 +13,6 @@ import { getFormDirtyValues } from '@/utils/common';
 
 import { expenseCategoryOptions, initialValues, intervalTypeOptions } from './expenseForm.utils';
 
-// interface ExpenseFormProps {
-//   closeModal: () => void;
-// }
-
 const ExpenseForm = () => {
   const { selectedTransaction: selectedExpense, closeModal } = useModal();
   const queryClient = useQueryClient();
