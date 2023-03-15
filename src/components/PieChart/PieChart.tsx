@@ -1,12 +1,13 @@
 import { SvgWrapper, ThemeProvider } from '@nivo/core';
 import { ResponsivePie } from '@nivo/pie';
+import { useMemo } from 'react';
 
 import { CategoryType } from '@/models/expense.schema';
 import { Stats } from '@/services/stats.service';
 import { getExpenseColor } from '@/utils/common';
 
-const PieChart = ({ data, dataKey }: { data: Stats[]; dataKey: string }) => {
-  const parsedData = data
+const parsePieChartData = (data: Stats[]) => {
+  return data
     .filter((d) => d._id !== null)
     .map((d) => ({
       id: d._id,
@@ -14,12 +15,14 @@ const PieChart = ({ data, dataKey }: { data: Stats[]; dataKey: string }) => {
       label: d._id,
       color: getExpenseColor(d._id as CategoryType),
     }));
-  console.log('parsedData', parsedData);
+};
 
+const PieChart = ({ data, dataKey }: { data: Stats[]; dataKey: string }) => {
+  const parsedData = useMemo(() => parsePieChartData(data), [data]);
   return (
     <ResponsivePie
       data={parsedData}
-      margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+      margin={{ top: 40, right: 20, bottom: 120, left: 20 }}
       innerRadius={0.5}
       padAngle={0.7}
       cornerRadius={3}
@@ -41,18 +44,18 @@ const PieChart = ({ data, dataKey }: { data: Stats[]; dataKey: string }) => {
       }}
       legends={[
         {
-          anchor: 'right',
-          direction: 'column',
+          anchor: 'bottom',
+          direction: 'row',
           justify: false,
           translateX: 0,
-          translateY: 16,
-          itemsSpacing: 10,
-          itemWidth: 100,
-          itemHeight: 18,
+          translateY: 50,
+          itemsSpacing: 5,
+          itemWidth: 75,
+          itemHeight: 14,
           itemTextColor: '#999',
           itemDirection: 'left-to-right',
           itemOpacity: 1,
-          symbolSize: 18,
+          symbolSize: 14,
           symbolShape: 'circle',
         },
       ]}

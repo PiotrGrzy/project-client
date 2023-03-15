@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import Datepicker from 'react-tailwindcss-datepicker';
 
-import Section from '../ui/Section';
-import SectionTitle from '../ui/SectionTitle';
+import Section from '@/components/ui/Section';
+import SectionTitle from '@/components/ui/SectionTitle';
 
 const DateRangePicker = () => {
   const [value, setValue] = useState({

@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 
+import FetchingStatus from '@/components/FetchingStatus';
 import ThemeSwitcher from '@/components/ThemeSwitcher';
 import { Paths } from '@/routes/paths';
 import { logoutUser } from '@/services/users.service';
@@ -25,6 +26,7 @@ const Header = () => {
           LOGO
         </Link>
         <div className="flex items-center gap-4">
+          <FetchingStatus />
           <ThemeSwitcher />
           <button className="btn btn-secondary" onClick={handleLogout}>
             Logout
