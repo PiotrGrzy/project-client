@@ -45,7 +45,15 @@ export interface IQueryParams {
 export const addExpense = async (payload: ExpenseUserInput) => client.post('expenses', JSON.stringify(payload));
 
 export const getExpenses = async (params: IQueryParams): Promise<IPaginateResult<Expense>> => {
-  const queryString = new URLSearchParams(params).toString();
+  const { asc, sortBy, limit, next, previous, search } = params;
+  const queryString = new URLSearchParams({
+    asc: asc.toString(),
+    sortBy,
+    limit: limit.toString(),
+    next,
+    previous,
+    search,
+  }).toString();
   const response = await client.get(`expenses?${queryString}`);
   return response.data;
 };

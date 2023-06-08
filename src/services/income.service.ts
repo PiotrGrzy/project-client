@@ -35,7 +35,15 @@ export interface IIncomeQueryParams {
 export const addIncome = async (payload: IncomeUserInput) => client.post('incomes', JSON.stringify(payload));
 
 export const getIncomes = async (params: IIncomeQueryParams): Promise<IPaginateResult<Income>> => {
-  const queryString = new URLSearchParams(params).toString();
+  const { asc, sortBy, limit, next, previous, search } = params;
+  const queryString = new URLSearchParams({
+    asc: asc.toString(),
+    sortBy,
+    limit: limit.toString(),
+    next,
+    previous,
+    search,
+  }).toString();
   const response = await client.get(`incomes?${queryString}`);
   return response.data;
 };

@@ -1,1 +1,1 @@
-export { default } from './DachboardCard';
+export { default } from './DashboardCard';

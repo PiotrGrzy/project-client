@@ -5,7 +5,6 @@ const NavItem = ({ children, to, ...props }: NavLinkProps) => {
   return (
     <li className={'flex-1'}>
       <NavLink
-        {...props}
         to={to}
         className={({ isActive }) =>
           classNames(
@@ -13,6 +12,7 @@ const NavItem = ({ children, to, ...props }: NavLinkProps) => {
             isActive ? 'bg-secondary text-secondary-content' : '',
           )
         }
+        {...props}
       >
         {children}
       </NavLink>

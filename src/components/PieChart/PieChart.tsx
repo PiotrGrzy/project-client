@@ -1,4 +1,3 @@
-import { SvgWrapper, ThemeProvider } from '@nivo/core';
 import { ResponsivePie } from '@nivo/pie';
 import { useMemo } from 'react';
 
@@ -17,7 +16,11 @@ const parsePieChartData = (data: Stats[]) => {
     }));
 };
 
-const PieChart = ({ data, dataKey }: { data: Stats[]; dataKey: string }) => {
+interface PieChartProps {
+  data: Stats[];
+}
+
+const PieChart = ({ data }: PieChartProps) => {
   const parsedData = useMemo(() => parsePieChartData(data), [data]);
   return (
     <ResponsivePie

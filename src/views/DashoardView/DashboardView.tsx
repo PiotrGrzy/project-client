@@ -18,15 +18,13 @@ const getBalanceStats = (expenses: Stats[], incomes: Stats[]): Stats[] => {
 };
 
 const DashboardView = () => {
-  const [queryParams, setQueryParams] = useState<IStatsParams>(initialParams);
+  const [queryParams] = useState<IStatsParams>(initialParams);
   const expenseStats = useExpenseStatsQuery(queryParams);
   const incomeStats = useIncomeStatsQuery(queryParams);
   const balanceStats = useMemo(
     () => getBalanceStats(expenseStats.data, incomeStats.data),
     [expenseStats.data, incomeStats.data],
   );
-  console.log(queryParams);
-  console.log('Test ninja');
 
   return (
     <div>
@@ -47,7 +45,7 @@ const DashboardView = () => {
         </DachboardCard>
       </div>
       <div className="h-96 w-full md:w-1/2 ">
-        <PieChart data={expenseStats.data} dataKey="cost" />
+        <PieChart data={expenseStats.data} />
       </div>
     </div>
   );

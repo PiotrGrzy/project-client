@@ -8,7 +8,7 @@ import Select from '@/components/ui/Select';
 import TextFormInput from '@/components/ui/TextFormInput';
 import { useModal } from '@/context/modalContext';
 import { expenseSchema, ExpenseUserInput } from '@/models/expense.schema';
-import { addExpense, Expense, updateExpense } from '@/services/expenses.service';
+import { addExpense, updateExpense } from '@/services/expenses.service';
 import { getFormDirtyValues } from '@/utils/common';
 
 import { expenseCategoryOptions, initialValues, intervalTypeOptions } from './expenseForm.utils';
@@ -16,6 +16,7 @@ import { expenseCategoryOptions, initialValues, intervalTypeOptions } from './ex
 const ExpenseForm = () => {
   const { selectedTransaction: selectedExpense, closeModal } = useModal();
   const queryClient = useQueryClient();
+
   const expense = useMutation({
     mutationFn: selectedExpense
       ? (data: Partial<ExpenseUserInput>) => updateExpense(data, selectedExpense._id)
@@ -36,9 +37,9 @@ const ExpenseForm = () => {
   const onSubmit: SubmitHandler<ExpenseUserInput> = async (data) => {
     if (selectedExpense) {
       const {
-        formState: { dirtyFields, isDirty },
+        formState: { dirtyFields },
       } = formMethods;
-      // TODO check why isDirty is always false
+
       const changedData = getFormDirtyValues(dirtyFields, data) as ExpenseUserInput;
       return expense.mutate(changedData, { onSuccess: closeModal });
     }

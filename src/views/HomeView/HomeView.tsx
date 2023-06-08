@@ -1,21 +1,8 @@
-import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { Paths } from '@/routes/paths';
-import { useUserQuery } from '@/services/users.service';
 
 const HomeView = () => {
-  // const navigate = useNavigate();
-  // const user = useUserQuery();
-
-  // if (user.isLoading) {
-  //   return <div>Loading</div>;
-  // }
-
-  // if (!user.data) {
-  //   navigate(Paths.SIGN_IN);
-  // }
-
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">

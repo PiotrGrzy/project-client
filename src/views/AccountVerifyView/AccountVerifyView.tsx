@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import useUrlQuery from '@/hooks/useUrlQuery';
-import { Paths } from '@/routes/paths';
 import { verifyUserAccount } from '@/services/users.service';
 
 const AccountVerifyView = () => {

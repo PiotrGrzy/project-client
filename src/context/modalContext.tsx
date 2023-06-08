@@ -4,6 +4,7 @@ import { Expense } from '@/services/expenses.service';
 import { Income } from '@/services/income.service';
 
 export type Transaction = Expense | Income | null;
+
 export interface IModalContext {
   isOpen: boolean;
   closeModal: () => void;

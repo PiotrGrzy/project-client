@@ -14,13 +14,15 @@ export type Stats = {
 };
 
 export const getIncomeStats = async (params: IStatsParams) => {
-  const searchParams = new URLSearchParams(params).toString();
+  const { startDate, endDate } = params;
+  const searchParams = new URLSearchParams({ startDate, endDate }).toString();
   const response = await client.get(`stats/income?${searchParams}`);
   return response.data;
 };
 
 export const getExpenseStats = async (params: IStatsParams) => {
-  const searchParams = new URLSearchParams(params).toString();
+  const { startDate, endDate } = params;
+  const searchParams = new URLSearchParams({ startDate, endDate }).toString();
   const response = await client.get(`stats/expense?${searchParams}`);
   return response.data;
 };

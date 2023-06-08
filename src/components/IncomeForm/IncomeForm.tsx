@@ -42,9 +42,8 @@ const IncomeForm = () => {
   const onSubmit: SubmitHandler<IncomeUserInput> = async (data) => {
     if (selectedIncome) {
       const {
-        formState: { dirtyFields, isDirty },
+        formState: { dirtyFields },
       } = formMethods;
-      // TODO check why isDirty is always false
       const changedData = getFormDirtyValues(dirtyFields, data) as IncomeUserInput;
       return expense.mutate(changedData, { onSuccess: closeModal });
     }
