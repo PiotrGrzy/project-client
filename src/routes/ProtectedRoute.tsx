@@ -8,7 +8,6 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute = ({ isAllowed, redirectPath = Paths.SIGN_IN }: ProtectedRouteProps) => {
-  console.log('isAllowed', isAllowed);
   if (!isAllowed) {
     return <Navigate to={redirectPath} replace />;
   }

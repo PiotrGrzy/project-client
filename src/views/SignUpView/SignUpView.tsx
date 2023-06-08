@@ -2,7 +2,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import * as z from 'zod';
 
 import Form from '@/components/ui/Form';
 import TextFormInput from '@/components/ui/TextFormInput';
