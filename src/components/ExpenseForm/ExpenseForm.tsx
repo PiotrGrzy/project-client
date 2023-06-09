@@ -1,6 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
 import Form from '@/components/ui/Form';
@@ -8,24 +6,15 @@ import Select from '@/components/ui/Select';
 import TextFormInput from '@/components/ui/TextFormInput';
 import { useModal } from '@/context/modalContext';
 import { expenseSchema, ExpenseUserInput } from '@/models/expense.schema';
-import { addExpense, updateExpense } from '@/services/expenses.service';
+import { useAddExpense, useUpdateExpense } from '@/services/expenses.service';
 import { getFormDirtyValues } from '@/utils/common';
 
 import { expenseCategoryOptions, initialValues, intervalTypeOptions } from './expenseForm.utils';
 
 const ExpenseForm = () => {
   const { selectedTransaction: selectedExpense, closeModal } = useModal();
-  const queryClient = useQueryClient();
-
-  const expense = useMutation({
-    mutationFn: selectedExpense
-      ? (data: Partial<ExpenseUserInput>) => updateExpense(data, selectedExpense._id)
-      : (data: ExpenseUserInput) => addExpense(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['expenses'] });
-    },
-    onError: (err: AxiosError) => err,
-  });
+  const addExpense = useAddExpense();
+  const updateExpense = useUpdateExpense(selectedExpense?._id);
 
   const formMethods = useForm<ExpenseUserInput>({
     resolver: zodResolver(expenseSchema),
@@ -41,9 +30,9 @@ const ExpenseForm = () => {
       } = formMethods;
 
       const changedData = getFormDirtyValues(dirtyFields, data) as ExpenseUserInput;
-      return expense.mutate(changedData, { onSuccess: closeModal });
+      return updateExpense.mutate(changedData, { onSuccess: closeModal });
     }
-    expense.mutate(data, { onSuccess: closeModal });
+    addExpense.mutate(data, { onSuccess: closeModal });
   };
 
   return (

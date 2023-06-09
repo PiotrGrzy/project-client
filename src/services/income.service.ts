@@ -1,4 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 
 import { IntervalType } from '@/models/expense.schema';
 import { IncomeUserInput } from '@/models/income.schema';
@@ -57,5 +58,27 @@ export const useIncomeQuery = (queryParams: IIncomeQueryParams) => {
     queryKey: ['incomes', queryParams],
     queryFn: () => getIncomes(queryParams),
     initialData: { docs: [], hasNext: false, hasPrevious: false, next: '', previous: '', totalDocs: 0 },
+  });
+};
+
+export const useUpdateIncome = (selectedIncomeId?: string) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data: Partial<IncomeUserInput>) => updateIncome(data, selectedIncomeId || ''),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['incomes'] });
+    },
+    onError: (err: AxiosError) => err,
+  });
+};
+
+export const useAddIncome = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data: IncomeUserInput) => addIncome(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['incomes'] });
+    },
+    onError: (err: AxiosError) => err,
   });
 };

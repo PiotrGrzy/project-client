@@ -2,21 +2,19 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { Navigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 import Form from '@/components/ui/Form';
 import TextFormInput from '@/components/ui/TextFormInput';
 import { SignInUserInput, signInUserSchema } from '@/models/signIn.schema';
 import { Paths } from '@/routes/paths';
-import { signInUser, useUserQuery } from '@/services/users.service';
+import { signInUser } from '@/services/users.service';
 
 const defaultValues = {
   email: '',
   password: '',
 };
 function SignInView() {
-  // const user = useUserQuery();
   const queryClient = useQueryClient();
   const signin = useMutation({
     mutationFn: (data: SignInUserInput) => signInUser(data),
@@ -36,10 +34,6 @@ function SignInView() {
   const onSubmit: SubmitHandler<SignInUserInput> = async (data) => {
     signin.mutate(data);
   };
-
-  // if (user.data) {
-  //   return <Navigate to={Paths.DASHBOARD} replace />;
-  // }
 
   return (
     <div className="flex justify-center items-center h-full">

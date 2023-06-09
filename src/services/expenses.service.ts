@@ -1,4 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 
 import { CategoryType, ExpenseUserInput, IntervalType } from '@/models/expense.schema';
 import client from '@/services/axios.instance';
@@ -71,5 +72,27 @@ export const useExpenseQuery = (queryParams: IQueryParams) => {
     queryKey: ['expenses', queryParams],
     queryFn: () => getExpenses(queryParams),
     initialData: { docs: [], hasNext: false, hasPrevious: false, next: '', previous: '', totalDocs: 0 },
+  });
+};
+
+export const useUpdateExpense = (selectedExpenseId?: string) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data: Partial<ExpenseUserInput>) => updateExpense(data, selectedExpenseId || ''),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['expenses'] });
+    },
+    onError: (err: AxiosError) => err,
+  });
+};
+
+export const useAddExpense = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data: ExpenseUserInput) => addExpense(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['expenses'] });
+    },
+    onError: (err: AxiosError) => err,
   });
 };
