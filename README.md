@@ -1,4 +1,4 @@
-# Budget App creaetd with: Vite + React + Typescript + ReactQuery
+# Budget App created with: Vite + React + Typescript + ReactQuery
 
 ## Installation
 
