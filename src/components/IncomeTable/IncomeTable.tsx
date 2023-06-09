@@ -6,7 +6,7 @@ import Pagination from '@/components/Pagination';
 import Search from '@/components/Search';
 import Section from '@/components/ui/Section';
 import SectionTitle from '@/components/ui/SectionTitle';
-import { IIncomeQueryParams, Income, IncomeDataKeys, useIncomeQuery } from '@/services/income.service';
+import { IIncomeQueryParams, IncomeDataKeys, useIncomeQuery } from '@/services/income.service';
 
 const initialQuery: IIncomeQueryParams = {
   sortBy: IncomeDataKeys.date,
