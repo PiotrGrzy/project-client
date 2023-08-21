@@ -6,7 +6,7 @@ import useEscapeKey from './useEscapeKey';
 describe('useEscapeKey', () => {
   it('should call the handleClose function when the Escape key is pressed', () => {
     const handleClose = vi.fn();
-    const { result } = renderHook(() => useEscapeKey(handleClose));
+    renderHook(() => useEscapeKey(handleClose));
 
     fireEvent.keyUp(document, { key: 'Escape' });
 
@@ -15,7 +15,7 @@ describe('useEscapeKey', () => {
 
   it('should not call the handleClose function when a different key is pressed', () => {
     const handleClose = vi.fn();
-    const { result } = renderHook(() => useEscapeKey(handleClose));
+    renderHook(() => useEscapeKey(handleClose));
 
     fireEvent.keyUp(document, { key: 'Enter' });
 

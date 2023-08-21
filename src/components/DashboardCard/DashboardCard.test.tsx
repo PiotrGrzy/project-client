@@ -7,11 +7,11 @@ import DashboardCard from './DashboardCard';
 describe('Dashboard Card', () => {
   it('renders the title and total amount correctly', () => {
     const title = 'Example Title';
-    const stats = [
+    const stats: Stats[] = [
       { _id: null, total: 100 },
       { _id: 'food', total: 50 },
       { _id: 'car', total: 75 },
-    ] as Stats[];
+    ];
     const color = 'text-blue-300';
 
     const { getByText } = render(
