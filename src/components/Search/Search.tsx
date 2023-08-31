@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 
 import useDebounce from '@/hooks/useDebounce';
-import useIsMounting from '@/hooks/useIsMount';
+import useIsMouted from '@/hooks/useIsMount';
 
 import MagnifyGlass from '../icons/MagnifyGlass';
 
@@ -12,12 +12,12 @@ interface SearchProps {
 }
 
 const Search = ({ onSearchChange }: SearchProps) => {
-  const isMounting = useIsMounting();
+  const isMounted = useIsMouted();
   const [searchValue, setSearchValue] = useState('');
   const debouncedSearch = useDebounce(searchValue, SEARCH_DELAY);
 
   useEffect(() => {
-    if (isMounting) return;
+    if (!isMounted) return;
     onSearchChange(debouncedSearch);
   }, [debouncedSearch]);
 
